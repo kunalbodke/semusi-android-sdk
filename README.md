@@ -19,16 +19,21 @@ The min. SDK version for your application should be 9 while targetSDKVersion can
 <li>Put the contextsdk.jar in the libs folder, and that's it.</li>
 </ul>
 
-This is how your directory structure should look like.
-<img href="http://semusi.com/images/Semusi-Context-Aware-SDK-Directory-Structure_1.png"></img>
+This is how your directory structure should look like.<br><br>
+<img src="http://semusi.com/images/Semusi-Context-Aware-SDK-Directory-Structure_1.png"></img>
 
 
 <b>Semusi SDK Directory Structure</b>
 
 <b>Step 2</b>
 <ul>
+<li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
+</ul>
+
+<ul>
 <li>Setting up hardware permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
 </ul>
+
 
 ```java
 // Remember we use Accelerometer to find out the activities
@@ -70,11 +75,31 @@ android:required="true" />
 <uses-permission android:name="android.permission.WRITE_SMS" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+<uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
 ```
-<ul>
-<li>Setting up intents and services – Let us setup our service in the same AndroidManifest.xml</li>
-</ul>
 
+<ul>
+<li>Setting up C2D permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
+</ul>
+```java
+<permission
+    android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE"
+    android:protectionLevel="signature" />
+```
+
+<ul>
+<li>Setting up 'Application' class – Copy and paste this in your AndroidManifest.xml file.</li>
+</ul>
+```java
+<application android:name="YOUR.PACKAGE.NAME.MyApplication" >
+```        
+
+<ul>
+<li>Setting up services and recievers – Let us setup our services and recievers in the same AndroidManifest.xml</li>
+</ul>
 ```java
 // Copy over this xml to your androidmanifest.xml
 // The base API service, which is responsible for making sure that the core services collecting and analyzing the data keep running
@@ -94,97 +119,111 @@ android:required="true" />
 </action>
 </intent-filter>
 </receiver>
+
+// A receiver for rule execution.
+<receiver
+    android:name="ruleengine.rulemanager.RuleTimerEventHandler"
+    android:enabled="true" />
+
 ```
 
-<ul>
-<li>A completed AndroidManifest.xml would look quite like this.</li>
-</ul>
+```java
+// You need to login/register for Semusi SDK features. Use the keys provided, and add below.
+
+<meta-data
+    android:name="com.google.android.gms.version"
+    android:value="4132500" />
+
+<!-- Required Meta-Data keys for SemusiSDK -->
+<meta-data
+    android:name="com.semusi.analytics.appid"
+    android:value="YOUR.APPLICATION.APPID" />
+<meta-data
+    android:name="com.semusi.analytics.appkey"
+    android:value="YOUR.APPLICATION.APPKEY" />
+<meta-data
+    android:name="com.semusi.analytics.apikey"
+    android:value="YOUR.APPLICATION.APIKEY" />
+<!-- End of required meta-data -->
+```
 
 ```java
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="semusi.semusiapp" android:versionCode="1" android:versionName="1.0" >
-<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
-<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
-<!-- detect unplug actions -->
-<uses-permission android:name="android.permission.DEVICE_POWER" />
+<!-- PushHandling setup start -->
+        <receiver android:name="com.urbanairship.CoreReceiver" />
+        <receiver
+            android:name="com.urbanairship.push.GCMPushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-<!-- retrieve ps list (running tasks) -->
-<uses-permission android:name="android.permission.DEVICE_POWER" />
-<uses-permission android:name="android.permission.GET_TASKS" />
-<uses-permission android:name="android.permission.BATTERY_STATS" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-<uses-permission android:name="android.permission.READ_LOGS" />
-<uses-permission android:name="android.permission.WAKE_LOCK" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.WRITE_SMS" />
-<uses-permission android:name="android.permission.READ_SMS" />
-<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+                <category android:name="YOUR.PACKAGE.NAME" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.YOUR.PACKAGE.NAME" />
 
-<application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
-<activity android:name="semusi.semusiapp.MainActivity" android:label="@string/app_name" >
-<intent-filter>
-<action android:name="android.intent.action.MAIN" />
-<category android:name="android.intent.category.LAUNCHER" />
-</intent-filter>
-</activity>
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
-<service android:name="semusi.activitysdk.Api" />
-<service android:name="semusi.mlservice.SemusiHAR" />
-<receiver android:name="semusi.mlservice.OnAlarmReceiver" >
-<intent-filter>
-<action android:name="android.intent.action.BOOT_COMPLETED" >
-</action>
-</intent-filter>
-</receiver>
+        <service
+            android:name="com.urbanairship.push.PushService"
+            android:label="Push Notification Service" />
+        <service
+            android:name="com.urbanairship.push.PushWorkerService"
+            android:label="Push Notification Worker Service" />
+        <service
+            android:name="com.urbanairship.analytics.EventService"
+            android:label="Event Service" />
 
-</application>
-</manifest>
+        <provider
+            android:name="com.urbanairship.UrbanAirshipProvider"
+            android:authorities="YOUR.PACKAGE.NAME.urbanairship.provider"
+            android:exported="false"
+            android:multiprocess="true" />
+
+        <service android:name="com.urbanairship.richpush.RichPushUpdateService" />
+        <service
+            android:name="com.urbanairship.location.LocationService"
+            android:label="Segments Service" />
+
+        <meta-data
+            android:name="com.urbanairship.autopilot"
+            android:value="ruleengine.pushmanager.UAAutoPilotRecevier" />
+
+        <receiver android:name="ruleengine.pushmanager.UAPushIntentReceiver" />
+        <!-- PushHandling Entry end -->
 ```
 
 
 <b>Step 3</b>
-Import the packages – Import these packages, before we start using the SDK, rest of the imports we can resolve on the fly.
+
+<ul>
+<li>Sample code for application class. You need to override 'Application' class with 'ContextApplication'.</li>
+</ul>
+```java
+package YOUR.PACKAGE.NAME;
+
+import semusi.activitysdk.ContextApplication;
+
+public class MyApplication extends ContextApplication {
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+}
+```
+
+<ul>
+<li>Import the packages – Import these packages, before we start using the SDK, rest of the imports we can resolve on the fly.</li>
+</ul>
 
 ```java
 import semusi.activitysdk.Api; 
 import semusi.activitysdk.ContextData; 
 import semusi.activitysdk.ContextSdk; 
-
-// This code is to start the ContextSDK Service
-Intent i = new Intent(getApplicationContext(), Api.class);
-getApplicationContext().startService(i);
-
-// This code is to gather current context of user
-ContextSdk sdk = new ContextSdk(MainActivity.this.getApplicationContext());
-ContextData currentData = sdk.getCurrentContext();
-
-// Getting Current Activity type
-ActivityType actType = currentData.getActivityType();
-
-// Getting Gender type
-GenderType genType = currentData.getGenderType();
-
-// Getting Weight type
-WeightType weType = currentData.getWeightType();
-
-// Getting Height type
-HeightType heiType = currentData.getHeightType();
-
-// Getting User InterestData : Return will be in form of string array list
-String[] interestArr = currentData.getInterestData();
-
-// Getting User Location Info
-double latitudeVal = currentData.getLocationLat();
-double longitudeVal = currentData.getLocationLong();
-String addressInfo = currentData.getLocationAddress();
-String[] addressTypes = currentData.getLocationType();
+import semusi.util.constants.EnumConstants;
 ```
 
 <hr>
@@ -202,73 +241,66 @@ contextsdk.jar - the basic activity tracking service and base api.
 
 <b>API Reference</b><br>
 <b>PULL API</b><br>
-Below code is used to initialize ContextSdk service
 
 ```java
-//initialize ContextSdk service
-Intent i = new Intent(getApplicationContext(), Api.class);
-getApplicationContext().startService(i);
+// Below code is used to initialize Semusi service
+// This is NECESSARY to make Semusi SDK work
+
+boolean isApiRunning = ContextSdk.isSemusiSensing(getApplicationContext());
+
+if (isApiRunning)
+    Api.stopContext();
+else
+    Api.startContext(getApplicationContext());
 ```
 
 Below code is used to initialize ContextSdk with context object, and get the current activity, current demographics (Gender,Weight,Height,Interest,and location).
 
 ```java
-ContextSdk sdk = new ContextSdk(MainActivity.this.getApplicationContext());
+	ContextSdk sdk = new ContextSdk(
+				MainActivity.this.getApplicationContext());
 
-ContextData currentData = sdk.getCurrentContext();
+	ContextData currentData = sdk.getCurrentContext();
 
-//Getting Current Activity type and return will be of enum type ‘ActivityType’
-ActivityType actType = currentData.getActivityType();
+        //Getting Gender type : Return will be of enum type 'EnumConstants.GenderEnum.GenderTypeString'
+	EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
+				.getGenderType();
 
-//Getting Gender type : Return will be of enum type ‘GenderType’
-GenderType genType = currentData.getGenderType();
+        //Getting Height type : Return will be of enum type 'EnumConstants.HeightEnum.HeightType'
+	EnumConstants.HeightEnum.HeightTypeString heightTypeData = currentData
+				.getHeightType();
 
-//Getting Weight type : Return will be of enum type ‘WeightType’
-WeightType weType = currentData.getWeightType();
+        //Getting Weight type : Return will be of enum type 'EnumConstants.WeightEnum.WeightType'
+	EnumConstants.WeightEnum.WeightTypeString weightTypeData = currentData
+				.getWeightType();
 
-//Getting Height type : Return will be of enum type ‘HeightType’
-HeightType heiType = currentData.getHeightType();
+        //Getting Current Activity type and return will be of enum type 'EnumConstants.ActivityEnum.ActivityTypeInt'
+        EnumConstants.ActivityEnum.ActivityTypeInt actType = currentData.getActivityType();
 
-//Getting User InterestData : Return will be in form of string array list
-String[] interestArr = currentData.getInterestData();
-
-//Getting User Location Info
-double latitudeVal = currentData.getLocationLat();
-double longitudeVal = currentData.getLocationLong();
-String addressInfo = currentData.getLocationAddress();
-String[] addressTypes = currentData.getLocationType();`
+        //Getting User Places Info and return will be of type 'String'
+        String place = currentData.getLocationType();
 ```
 
 <b>GetHistoryData API</b>
 Below code is used to get the History Data of Acitvities for a given range of dates, and set of Activities for which data is to be fetched.
 
 ```java
-// Initialize ContextSDK
-ContextSdk sdk = new ContextSdk(MainActivity.this.getApplicationContext());
-
 // Getting data history - Returns array
 // fromDate - epoch value at 00:00:00 hrs
 // toDate - epoch value at 00:00:00 hrs
-// ActivityType - Enum that can be bitwise-OR'd to get different activities. Enum values as below
 
-ContextData[] historyData = sdk.getActivityHistory(fromDate, toDate, ActivityType.WalkingActivity.ordinal() | ActivityType.SittingActivity.ordinal() | ActivityType.RunningActivity.ordinal());
+ContextData[] historyData = sdk.getActivityHistory(fromDate, toDate, ActivityType.WalkingActivity.ordinal(),            
+        ActivityType.SittingActivity.ordinal(), ActivityType.RunningActivity.ordinal());
 
 // Access history values
 if(historyData[0] != null) 
 {
-for(int i = 0; i < historyData.length; i++)
-{
-ActivityData activity = historyData[i].getActivityType();
-float duration = historyData[i].getDuration(); // duration in minutes
-float calories = historyData[i].getCalories();
-long date = historyData[i].getDate(); // date in epoch 00:00:00
-}
+    for(int i = 0; i < historyData.length; i++)
+    {
+        ActivityData activity = historyData[i].getActivityType();
+        float duration = historyData[i].getDuration(); // duration in minutes
+        float calories = historyData[i].getCalories();
+        long date = historyData[i].getDate(); // date in epoch 00:00:00
+    }
 }
 ```
-
-<b>ActivityType - Enum Values</b>
-StandingActivity
-WalkingActivity
-RunningActivity
-SittingActivity
-SleepingActivity
