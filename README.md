@@ -128,6 +128,8 @@ android:required="true" />
 ```
 
 ```java
+// You need to login/register for Semusi SDK features. Use the keys provided, and add below.
+
 <meta-data
     android:name="com.google.android.gms.version"
     android:value="4132500" />
@@ -135,13 +137,13 @@ android:required="true" />
 <!-- Required Meta-Data keys for SemusiSDK -->
 <meta-data
     android:name="com.semusi.analytics.appid"
-    android:value="5333c369c78850a41500001d" />
+    android:value="YOUR.APPLICATION.APPID" />
 <meta-data
     android:name="com.semusi.analytics.appkey"
-    android:value="39054da3c22aebe7e9136f3e9b557bf7eb2bea40" />
+    android:value="YOUR.APPLICATION.APPKEY" />
 <meta-data
     android:name="com.semusi.analytics.apikey"
-    android:value="32c971296df6024cee27c656c05803fa" />
+    android:value="YOUR.APPLICATION.APIKEY" />
 <!-- End of required meta-data -->
 ```
 
@@ -222,29 +224,6 @@ import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData; 
 import semusi.activitysdk.ContextSdk; 
 import semusi.util.constants.EnumConstants;
-
-// This code is to start the ContextSDK Service
-Intent i = new Intent(getApplicationContext(), Api.class);
-getApplicationContext().startService(i);
-
-// This code is to gather current context of user
-ContextSdk sdk = new ContextSdk(MainActivity.this.getApplicationContext());
-ContextData currentData = sdk.getCurrentContext();
-
-// Getting Current Activity type
-ActivityType actType = currentData.getActivityType();
-
-// Getting Gender type
-GenderType genType = currentData.getGenderType();
-
-// Getting Weight type
-WeightType weType = currentData.getWeightType();
-
-// Getting Height type
-HeightType heiType = currentData.getHeightType();
-
-// Getting User Places Info
-String place = currentData.getLocationType();
 ```
 
 <hr>
@@ -265,6 +244,8 @@ contextsdk.jar - the basic activity tracking service and base api.
 
 ```java
 // Below code is used to initialize Semusi service
+// This is NECESSARY to make Semusi SDK work
+
 boolean isApiRunning = ContextSdk.isSemusiSensing(getApplicationContext());
 
 if (isApiRunning)
@@ -276,21 +257,21 @@ else
 Below code is used to initialize ContextSdk with context object, and get the current activity, current demographics (Gender,Weight,Height,Interest,and location).
 
 ```java
-		ContextSdk sdk = new ContextSdk(
+	ContextSdk sdk = new ContextSdk(
 				MainActivity.this.getApplicationContext());
 
-		ContextData currentData = sdk.getCurrentContext();
+	ContextData currentData = sdk.getCurrentContext();
 
         //Getting Gender type : Return will be of enum type 'EnumConstants.GenderEnum.GenderTypeString'
-		EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
+	EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
 				.getGenderType();
 
         //Getting Height type : Return will be of enum type 'EnumConstants.HeightEnum.HeightType'
-		EnumConstants.HeightEnum.HeightTypeString heightTypeData = currentData
+	EnumConstants.HeightEnum.HeightTypeString heightTypeData = currentData
 				.getHeightType();
 
         //Getting Weight type : Return will be of enum type 'EnumConstants.WeightEnum.WeightType'
-		EnumConstants.WeightEnum.WeightTypeString weightTypeData = currentData
+	EnumConstants.WeightEnum.WeightTypeString weightTypeData = currentData
 				.getWeightType();
 
         //Getting Current Activity type and return will be of enum type 'EnumConstants.ActivityEnum.ActivityTypeInt'
