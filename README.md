@@ -70,7 +70,21 @@ android:required="true" />
 <uses-permission android:name="android.permission.WRITE_SMS" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+<uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />
 ```
+
+<ul>
+<li>Setting up C2D permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
+</ul>
+```java
+<permission
+    android:name="com.example.contexttest.permission.C2D_MESSAGE"
+    android:protectionLevel="signature" />
+```
+
 <ul>
 <li>Setting up intents and services – Let us setup our service in the same AndroidManifest.xml</li>
 </ul>
