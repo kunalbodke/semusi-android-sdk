@@ -20,7 +20,7 @@ The min. SDK version for your application should be 9 while targetSDKVersion can
 </ul>
 
 This is how your directory structure should look like.<br><br>
-<img src="http://semusi.com/images/Semusi-Context-Aware-SDK-Directory-Structure_1.png"></img>
+
 
 
 <b>Semusi SDK Directory Structure</b>
