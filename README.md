@@ -127,6 +127,16 @@ android:required="true" />
 
 ```
 
+Here is the process for getting the AppID, AppKey, and APIKey
+
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A45%3A12.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A45%3A24.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A54%3A00.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A54%3A15.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A59%3A26.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+13%3A03%3A00.png"></img>
+<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+13%3A03%3A10.png"></img>
+
 ```java
 // You need to login/register for Semusi SDK features. Use the keys provided, and add below.
 
