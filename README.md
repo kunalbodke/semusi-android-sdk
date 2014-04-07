@@ -4,11 +4,11 @@ semusi-android-sdk
 Android SDK code of Semusi Context SDK, Use it to enrich your Android apps with the power of context
 
 <b>Getting Started</b><br>
-In this tutorial we will guide you through the process of creating a hello world package that uses semusi service to find out which activities are being performed by the user, what is the current context and how many calories are being burnt in this process.
+In this tutorial we will guide you through the process of creating a hello world package that uses Semusi service to find out which activities are being performed by the user, what is the current context and how many calories are being burnt in this process. The Semusi service also tells you the user demographics - the gender, height and weight of the user, along with the current place i.e. work, home, in-transit, other. We also give you user-specific analytics through our Semusi Analytics site, and to take action based on these contexts.
 
 The Semusi Service API consists of an Android service and a base API, both Service and the API are coupled in the JAR provided with the SDK bundle.
 
-The Semusi service need to use a number of resources in order to be able to track the user’s activities under all conditions, and make sure that the service doesn’t get killed if the phone is under stress, or of any reason; Don’t worry its battery optimized, your users won’t complain.
+The Semusi service need to use a number of resources in order to be able to track the user’s activities under all conditions, and make sure that the service doesn’t get killed if the phone is under stress, or of any reason; Don’t worry about its battery consumption as it is optimized and your users won’t complain.
 
 We’ll see what permissions are those and how they help us; the base API however uses Internet as well so internet permissions will also be required.
 
