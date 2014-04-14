@@ -46,18 +46,24 @@ android:required="true" />
 </ul>
 
 ```java
-// DEVICE_POWER – We need to know the power state of device to make ourselves more efficient
-// GET_TASKS – We use it to find out the current running tasks and measure their battery usage and we find our own battery usage percentage to find out how are we doing.
-// BATTERY_STATS – Quite simply used to find out battery statistics.
+
+// DEVICE_POWER – We need to know the power state of device to conserve battery
+// GET_TASKS – We use it to find out the current running tasks and measure our tasks' battery usage for performance.
+// BATTERY_STATS – Used to find out battery statistics.
 // WRITE_EXTERNAL STORAGE – Used to write the logs and database files.
-// INTERNET – Used to upload/downlaod the data to and from cloud.
-// ACCESS_COARSE_LOCATION / ACCESS_FINE_LOCATION – Used to find out location; very much required to find out in-vehicle sort of cases.
+// INTERNET – Used to upload/downlaod the data to and from the cloud.
+// ACCESS_COARSE_LOCATION / ACCESS_FINE_LOCATION – Used to find out location; required to find out in-vehicle activity.
 // RECEIVE_BOOT_COMPLETED - Find out if the system has finished booting, and start our service.
 // READ_LOGS – Read the ACRA logs.
-// WAKE_LOCK – To keep processor from sleeping or screen from dimming.
+// WAKE_LOCK – To keep processor from sleeping and optimizing algorithm vs battery use.
 // READ_PHONE_STATE - To read the user profile
-// ACCESS_NETWORK_STATE – Allows the application to read network state, useful for in-vehicle activity.
+// ACCESS_NETWORK_STATE – Allows the application to read network state, useful for in-vehicle activity and places prediction.
+// ACCESS_WIFI_STATE - Allows the application to read WiFi state, useful for in-vehicle activity and places prediction.
+// c2dm.permission.RECEIVE - Allow push messages for rules
+// permission.C2D_MESSAGE - Allow executing rules
 
+
+// Mandatory Permissions
 <uses-permission android:name="android.permission.DEVICE_POWER" />
 <uses-permission android:name="android.permission.GET_TASKS" />
 <uses-permission android:name="android.permission.BATTERY_STATS" />
@@ -70,15 +76,22 @@ android:required="true" />
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+<uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
+
+
+// READ_HISTORY_BOOKMARKS - Allows for better prediction
+// WRITE_SMS, READ_SMS - Allows for better prediction
+// GET_ACCOUNTS - allows for better prediction
+// VIBRATE - Used for feedback
+
+// Optional Permissions
+<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
 <uses-permission android:name="android.permission.WRITE_SMS" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 <uses-permission android:name="android.permission.VIBRATE" />
-<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-<uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
 ```
 
 <ul>
