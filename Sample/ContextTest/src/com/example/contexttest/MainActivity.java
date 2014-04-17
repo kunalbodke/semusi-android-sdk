@@ -2,6 +2,7 @@ package com.example.contexttest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,7 +10,6 @@ import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
 import semusi.activitysdk.ContextSdk;
 import semusi.util.constants.EnumConstants;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -65,6 +65,24 @@ public class MainActivity extends Activity {
 				MainActivity.this.getApplicationContext());
 		ContextData currentData = sdk.getCurrentContext();
 
+		long currentDateEpoch = getCurrentDateEpoch();
+		
+		// Access pedometer history values
+		ContextData[] pedometerData = sdk.getPedometerHistory(currentDateEpoch, currentDateEpoch);
+
+		int pedometerCount = 0;
+		float pedometerCalories = 0;
+		
+		if(pedometerData[0] != null) 
+		{
+		    for(int i = 0; i < pedometerData.length; i++)
+		    {
+		        pedometerCount = pedometerData[i].getPedometerCount();
+		        pedometerCalories = pedometerData[i].getPedometerCountCalories();
+		    }
+		}
+		
+		
 		// set gender type
 		EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
 				.getGenderType();
@@ -97,7 +115,11 @@ public class MainActivity extends Activity {
 		TextView whenText = (TextView) findViewById(R.id.TextView01);
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		String dateStr = formatter.format(Calendar.getInstance().getTime());
-		whenText.setText(dateStr);
+		whenText.setText(dateStr);		
+				
+		// set pedometer value
+		TextView pedometerText = (TextView) findViewById(R.id.TextViewPedo);
+		pedometerText.setText(pedometerCount+"");
 
 		setBtnUI();
 	}
@@ -117,5 +139,31 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
+	/**
+	  * Get current date (00:00:00) in epoch time
+	  * 
+	  * @return epoch time of current day in seconds
+	  */
+	public long getCurrentDateEpoch() {
+
+	  Calendar cal = Calendar.getInstance();
+
+	  int year = cal.get(Calendar.YEAR);
+	  int month = cal.get(Calendar.MONTH);
+	  int day = cal.get(Calendar.DAY_OF_MONTH);
+
+	  cal.set(Calendar.YEAR, year);
+	  cal.set(Calendar.MONTH, month);
+	  cal.set(Calendar.DAY_OF_MONTH, day);
+	  cal.set(Calendar.HOUR_OF_DAY, 0);
+	  cal.set(Calendar.MINUTE, 0);
+	  cal.set(Calendar.SECOND, 0);
+	  cal.set(Calendar.MILLISECOND, 0);
+
+	  long epoch_time = cal.getTimeInMillis() / 1000;
+
+	  return epoch_time;
+	 }
 
 }
