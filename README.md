@@ -305,14 +305,14 @@ Below code is used to initialize ContextSdk with context object, and get the cur
 ```
 
 <b>GetHistoryData API</b>
-Below code is used to get the History Data of Acitvities for a given range of dates, and set of Activities for which data is to be fetched.
+Below code is used to get the History Data of Acitvities for a given range of dates, and set of Activities for which data is to be fetched. For accessing data for a single date, use the same date epoch for fromDateEpoch and toDateEpoch.
 
 ```java
 // Getting data history - Returns array
 // fromDate - epoch value at 00:00:00 hrs
 // toDate - epoch value at 00:00:00 hrs
 
-ContextData[] historyData = sdk.getActivityHistory(fromDate, toDate, ActivityType.WalkingActivity.ordinal(),            
+ContextData[] historyData = sdk.getActivityHistory(fromDateEpoch, toDateEpoch, ActivityType.WalkingActivity.ordinal(),            
         ActivityType.SittingActivity.ordinal(), ActivityType.RunningActivity.ordinal());
 
 // Access history values
@@ -325,5 +325,24 @@ if(historyData[0] != null)
         float calories = historyData[i].getCalories();
         long date = historyData[i].getDate(); // date in epoch 00:00:00
     }
+}
+```
+
+<b>GetPedometerHistory API</b>
+Below code is used to get Pedometer Data for a given range of dates. For accessing data for a single date, use the same date epoch for fromDateEpoch and toDateEpoch.
+
+```java
+// Access pedometer history values
+ContextData[] pedometerData = sdk.getPedometerHistory(fromDateEpoch, toDateEpoch);
+
+int pedometerCount = 0;
+float pedometerCalories = 0;
+		
+if(pedometerData[0] != null) {
+	for(int i = 0; i < pedometerData.length; i++)
+	{
+		pedometerCount = pedometerData[i].getPedometerCount();
+		pedometerCalories = pedometerData[i].getPedometerCountCalories();
+	}
 }
 ```
