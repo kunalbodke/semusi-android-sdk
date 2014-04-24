@@ -66,23 +66,22 @@ public class MainActivity extends Activity {
 		ContextData currentData = sdk.getCurrentContext();
 
 		long currentDateEpoch = getCurrentDateEpoch();
-		
+
 		// Access pedometer history values
-		ContextData[] pedometerData = sdk.getPedometerHistory(currentDateEpoch, currentDateEpoch);
+		ContextData[] pedometerData = sdk.getPedometerHistory(currentDateEpoch,
+				currentDateEpoch);
 
 		int pedometerCount = 0;
 		float pedometerCalories = 0;
-		
-		if(pedometerData[0] != null) 
-		{
-		    for(int i = 0; i < pedometerData.length; i++)
-		    {
-		        pedometerCount = pedometerData[i].getPedometerCount();
-		        pedometerCalories = pedometerData[i].getPedometerCountCalories();
-		    }
+
+		if (pedometerData[0] != null) {
+			for (int i = 0; i < pedometerData.length; i++) {
+				pedometerCount = pedometerData[i].getPedometerCount();
+				pedometerCalories = pedometerData[i]
+						.getPedometerCountCalories();
+			}
 		}
-		
-		
+
 		// set gender type
 		EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
 				.getGenderType();
@@ -115,11 +114,11 @@ public class MainActivity extends Activity {
 		TextView whenText = (TextView) findViewById(R.id.TextView01);
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		String dateStr = formatter.format(Calendar.getInstance().getTime());
-		whenText.setText(dateStr);		
-				
+		whenText.setText(dateStr);
+
 		// set pedometer value
 		TextView pedometerText = (TextView) findViewById(R.id.TextViewPedo);
-		pedometerText.setText(pedometerCount+"");
+		pedometerText.setText(pedometerCount + "");
 
 		setBtnUI();
 	}
@@ -141,29 +140,29 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	  * Get current date (00:00:00) in epoch time
-	  * 
-	  * @return epoch time of current day in seconds
-	  */
+	 * Get current date (00:00:00) in epoch time
+	 * 
+	 * @return epoch time of current day in seconds
+	 */
 	public long getCurrentDateEpoch() {
 
-	  Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 
-	  int year = cal.get(Calendar.YEAR);
-	  int month = cal.get(Calendar.MONTH);
-	  int day = cal.get(Calendar.DAY_OF_MONTH);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
 
-	  cal.set(Calendar.YEAR, year);
-	  cal.set(Calendar.MONTH, month);
-	  cal.set(Calendar.DAY_OF_MONTH, day);
-	  cal.set(Calendar.HOUR_OF_DAY, 0);
-	  cal.set(Calendar.MINUTE, 0);
-	  cal.set(Calendar.SECOND, 0);
-	  cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DAY_OF_MONTH, day);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
 
-	  long epoch_time = cal.getTimeInMillis() / 1000;
+		long epoch_time = cal.getTimeInMillis() / 1000;
 
-	  return epoch_time;
-	 }
+		return epoch_time;
+	}
 
 }
