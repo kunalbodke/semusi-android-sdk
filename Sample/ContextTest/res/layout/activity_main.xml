@@ -146,7 +146,7 @@
             android:textSize="28dp"
             android:textStyle="bold" />
 
-                <TextView
+        <TextView
             android:id="@+id/TextView55"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
@@ -157,13 +157,13 @@
             android:textColor="@android:color/black"
             android:textSize="28dp"
             android:textStyle="bold" />
-        
+
         <Button
             android:id="@+id/button1"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/TextViewPedo"
             android:layout_alignParentBottom="true"
+            android:layout_below="@+id/TextViewPedo"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="20dp"
@@ -176,16 +176,23 @@
             android:id="@+id/TextViewPedo"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/TextView01"
             android:layout_alignBaseline="@+id/TextView55"
             android:layout_alignBottom="@+id/TextView55"
             android:layout_alignLeft="@+id/TextView01"
+            android:layout_below="@+id/TextView01"
             android:gravity="center"
             android:text=""
             android:textColor="@android:color/black"
             android:textSize="28dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/apiVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="v1.0.12" />
     </RelativeLayout>
 
 </ScrollView>

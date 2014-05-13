@@ -2,14 +2,16 @@ package com.example.contexttest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
 import semusi.activitysdk.ContextSdk;
+import semusi.activitysdk.SdkConfig;
 import semusi.util.constants.EnumConstants;
+import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
+import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -40,8 +42,12 @@ public class MainActivity extends Activity {
 						.isSemusiSensing(getApplicationContext());
 				if (isApiRunning)
 					Api.stopContext();
-				else
-					Api.startContext(getApplicationContext());
+				else {
+					SdkConfig config = new SdkConfig();
+					config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
+					config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+					Api.startContext(getApplicationContext(), config);
+				}
 			}
 		});
 
@@ -119,6 +125,16 @@ public class MainActivity extends Activity {
 		// set pedometer value
 		TextView pedometerText = (TextView) findViewById(R.id.TextViewPedo);
 		pedometerText.setText(pedometerCount + "");
+
+		// set apiVersion
+		TextView apiVersion = (TextView) findViewById(R.id.apiVersion);
+		try {
+			String version = "v"
+					+ getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			apiVersion.setText(version);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		setBtnUI();
 	}
