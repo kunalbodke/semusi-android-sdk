@@ -243,10 +243,13 @@ public class MyApplication extends ContextApplication {
 </ul>
 
 ```java
-import semusi.activitysdk.Api; 
-import semusi.activitysdk.ContextData; 
-import semusi.activitysdk.ContextSdk; 
+import semusi.activitysdk.Api;
+import semusi.activitysdk.ContextData;
+import semusi.activitysdk.ContextSdk;
+import semusi.activitysdk.SdkConfig;
 import semusi.util.constants.EnumConstants;
+import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
+import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
 ```
 
 <hr>
@@ -273,8 +276,23 @@ boolean isApiRunning = ContextSdk.isSemusiSensing(getApplicationContext());
 
 if (isApiRunning)
     Api.stopContext();
-else
-    Api.startContext(getApplicationContext());
+else {
+    // Config to handle enable-disable state
+    SdkConfig config = new SdkConfig();
+    config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
+    config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+    config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+    config.setActivityTrackingAllowedState(true);
+    config.setAnalyticsTrackingAllowedState(true);
+    config.setDemographicsTrackingAllowedState(true);
+    config.setPedometerTrackingStateAllowed(true);
+    config.setPlacesTrackingAllowedState(true);
+    config.setRuleEngineEventStateAllowed(true);
+    
+    // start semusi context sensing with config
+    // by default all setters are enabled and accuracy level to High
+    Api.startContext(getApplicationContext(), config);
+}
 ```
 
 Below code is used to initialize ContextSdk with context object, and get the current activity, current demographics (Gender,Weight,Height,Interest,and location).
