@@ -52,7 +52,7 @@ android:required="true" />
 // BATTERY_STATS – Used to find out battery statistics.
 // WRITE_EXTERNAL STORAGE – Used to write the logs and database files.
 // INTERNET – Used to upload/downlaod the data to and from the cloud.
-// ACCESS_COARSE_LOCATION / ACCESS_FINE_LOCATION – Used to find out location; required to find out in-vehicle activity.
+// ACCESS_COARSE_LOCATION – Used to find out location; required to find out in-vehicle activity.
 // RECEIVE_BOOT_COMPLETED - Find out if the system has finished booting, and start our service.
 // READ_LOGS – Read the ACRA logs.
 // WAKE_LOCK – To keep processor from sleeping and optimizing algorithm vs battery use.
@@ -70,7 +70,6 @@ android:required="true" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 <uses-permission android:name="android.permission.READ_LOGS" />
 <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -82,13 +81,12 @@ android:required="true" />
 
 
 // READ_HISTORY_BOOKMARKS - Allows for better prediction
-// WRITE_SMS, READ_SMS - Allows for better prediction
+// READ_SMS - Allows for better prediction
 // GET_ACCOUNTS - allows for better prediction
 // VIBRATE - Used for feedback
 
 // Optional Permissions
 <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-<uses-permission android:name="android.permission.WRITE_SMS" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 <uses-permission android:name="android.permission.VIBRATE" />
