@@ -279,7 +279,6 @@ else {
     SdkConfig config = new SdkConfig();
     config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
     config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
-    config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
     config.setActivityTrackingAllowedState(true);
     config.setAnalyticsTrackingAllowedState(true);
     config.setDemographicsTrackingAllowedState(true);
@@ -328,17 +327,22 @@ Below code is used to get the History Data of Acitvities for a given range of da
 // fromDate - epoch value at 00:00:00 hrs
 // toDate - epoch value at 00:00:00 hrs
 
-ContextData[] historyData = sdk.getActivityHistory(fromDateEpoch, toDateEpoch, ActivityType.WalkingActivity.ordinal(),            
-        ActivityType.SittingActivity.ordinal(), ActivityType.RunningActivity.ordinal());
+ContextData[] historyData = sdk.getActivityHistory(fromDateEpoch, toDateEpoch, 
+				ActivityTypeInt.WalkingActivity.ordinal(),            
+				ActivityTypeInt.StandingActivity.ordinal(),
+				ActivityTypeInt.SittingActivity.ordinal(),
+				ActivityTypeInt.SleepingActivity.ordinal(),
+				ActivityTypeInt.RunningActivity.ordinal(),
+				ActivityTypeInt.VehicleActivity.ordinal());
 
 // Access history values
 if(historyData[0] != null) 
 {
     for(int i = 0; i < historyData.length; i++)
     {
-        ActivityData activity = historyData[i].getActivityType();
-        float duration = historyData[i].getDuration(); // duration in minutes
-        float calories = historyData[i].getCalories();
+        ActivityTypeInt activity = historyData[i].getActivityType();
+        float duration = historyData[i].getActivityDuration(); // duration in minutes
+        float calories = historyData[i].getActivityCalories();
         long date = historyData[i].getDate(); // date in epoch 00:00:00
     }
 }
