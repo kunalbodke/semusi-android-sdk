@@ -1,0 +1,93 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/headerimg" />
+
+        <TextView
+            android:id="@+id/TextView55"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="Step Count:"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextViewPedo"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/TextView55"
+            android:layout_alignBottom="@+id/TextView55"
+            android:layout_toRightOf="@id/TextView55"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextViewPedoCalTxt"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextView55"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="Step Calories:"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextViewPedoCal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/TextViewPedoCalTxt"
+            android:layout_alignBottom="@+id/TextViewPedoCalTxt"
+            android:layout_toRightOf="@id/TextViewPedoCalTxt"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/TextViewPedoCal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:text="Start"
+            android:textColor="@android:color/black"
+            android:textSize="21dp" />
+
+        <TextView
+            android:id="@+id/apiVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="v1.0.0" />
+    </RelativeLayout>
+
+</ScrollView>

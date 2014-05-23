@@ -1,6 +1,5 @@
-package com.example.contexttest;
+package com.example.pedometertest;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,10 +8,6 @@ import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
 import semusi.activitysdk.ContextSdk;
 import semusi.activitysdk.SdkConfig;
-import semusi.util.constants.EnumConstants;
-import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
-import semusi.util.constants.EnumConstants.ActivityEnum.ActivityTypeInt;
-import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -45,8 +40,14 @@ public class MainActivity extends Activity {
 					Api.stopContext();
 				else {
 					SdkConfig config = new SdkConfig();
-					config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
-					config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+
+				    config.setActivityTrackingAllowedState(true);
+				    config.setPedometerTrackingStateAllowed(true);
+				    config.setAnalyticsTrackingAllowedState(false);
+				    config.setDemographicsTrackingAllowedState(false);
+				    config.setPlacesTrackingAllowedState(false);
+				    config.setRuleEngineEventStateAllowed(false);
+				    
 					Api.startContext(getApplicationContext(), config);
 				}
 			}
@@ -70,7 +71,6 @@ public class MainActivity extends Activity {
 		// Initialize Sdk object to gather current context data of user
 		ContextSdk sdk = new ContextSdk(
 				MainActivity.this.getApplicationContext());
-		ContextData currentData = sdk.getCurrentContext();
 		
 		long currentDateEpoch = getCurrentDateEpoch();
 
@@ -89,43 +89,13 @@ public class MainActivity extends Activity {
 			}
 		}
 
-		// set gender type
-		EnumConstants.GenderEnum.GenderTypeString genderTypeData = currentData
-				.getGenderType();
-		TextView genderType = (TextView) findViewById(R.id.genderTypeTv);
-		genderType.setText(genderTypeData.toString().toUpperCase());
-
-		// set height type
-		EnumConstants.HeightEnum.HeightTypeString heightTypeData = currentData
-				.getHeightType();
-		TextView heightType = (TextView) findViewById(R.id.heightTypeTv);
-		heightType.setText(heightTypeData.toString().toUpperCase());
-
-		// set weight type
-		EnumConstants.WeightEnum.WeightTypeString weightTypeData = currentData
-				.getWeightType();
-		TextView weightType = (TextView) findViewById(R.id.weightTypeTv);
-		weightType.setText(weightTypeData.toString().toUpperCase());
-
-		// set activity type
-		TextView activityType = (TextView) findViewById(R.id.TextView02);
-		activityType.setText(currentData.getActivityType().toString()
-				.toUpperCase()
-				+ "");
-
-		// set places type
-		TextView placesType = (TextView) findViewById(R.id.TextView04);
-		placesType.setText(currentData.getLocationType().toUpperCase());
-
-		// set when based value
-		TextView whenText = (TextView) findViewById(R.id.TextView01);
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-		String dateStr = formatter.format(Calendar.getInstance().getTime());
-		whenText.setText(dateStr);
+		// set pedometer value
+		TextView pedometerCountText = (TextView) findViewById(R.id.TextViewPedo);
+		pedometerCountText.setText(pedometerCount + "");
 
 		// set pedometer value
-		TextView pedometerText = (TextView) findViewById(R.id.TextViewPedo);
-		pedometerText.setText(pedometerCount + "");
+		TextView pedometerCalText = (TextView) findViewById(R.id.TextViewPedoCal);
+		pedometerCalText.setText(pedometerCalories + "");
 
 		// set apiVersion
 		TextView apiVersion = (TextView) findViewById(R.id.apiVersion);
