@@ -328,12 +328,12 @@ Below code is used to get the History Data of Acitvities for a given range of da
 // toDate - epoch value at 00:00:00 hrs
 
 ContextData[] historyData = sdk.getActivityHistory(fromDateEpoch, toDateEpoch, 
-				ActivityTypeInt.WalkingActivity.ordinal(),            
-				ActivityTypeInt.StandingActivity.ordinal(),
-				ActivityTypeInt.SittingActivity.ordinal(),
-				ActivityTypeInt.SleepingActivity.ordinal(),
-				ActivityTypeInt.RunningActivity.ordinal(),
-				ActivityTypeInt.VehicleActivity.ordinal());
+				ActivityTypeInt.WalkingActivity.getActivityValue(),            
+				ActivityTypeInt.StandingActivity.getActivityValue(),
+				ActivityTypeInt.SittingActivity.getActivityValue(),
+				ActivityTypeInt.SleepingActivity.getActivityValue(),
+				ActivityTypeInt.RunningActivity.getActivityValue(),
+				ActivityTypeInt.VehicleActivity.getActivityValue());
 
 // Access history values
 if(historyData[0] != null) 
