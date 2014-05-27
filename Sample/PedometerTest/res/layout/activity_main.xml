@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="v1.0.0" />
+            android:text="v1.0.1" />
     </RelativeLayout>
 
 </ScrollView>
