@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 		ContextSdk sdk = new ContextSdk(
 				MainActivity.this.getApplicationContext());
 		ContextData currentData = sdk.getCurrentContext();
-		
+
 		long currentDateEpoch = getCurrentDateEpoch();
 
 		// Access pedometer history values
