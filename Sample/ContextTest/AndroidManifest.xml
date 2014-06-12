@@ -76,11 +76,11 @@
         <!-- Semusi Sdk services and Receivers -->
         <service android:name="semusi.activitysdk.Api" />
         <service android:name="semusi.mlservice.SemusiHAR" />
+        <service android:name="semusi.ruleengine.rulemanager.RuleGatherService" />
 
         <receiver android:name="semusi.mlservice.OnAlarmReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" >
-                </action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
@@ -95,8 +95,7 @@
             android:enabled="true" />
         <receiver android:name="com.example.contexttest.CampaignEventReceiver" >
             <intent-filter>
-                <action android:name="com.semusi.CampaignEvent" >
-                </action>
+                <action android:name="com.semusi.CampaignEvent" />
             </intent-filter>
         </receiver>
         <!-- End of sdk services -->
