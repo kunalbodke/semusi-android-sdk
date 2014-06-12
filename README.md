@@ -31,65 +31,61 @@ This is how your directory structure should look like.<br><br>
 </ul>
 
 <ul>
-<li>Setting up hardware permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
-</ul>
-
-
-```java
-// Remember we use Accelerometer to find out the activities
-<uses-feature
-android:name="android.hardware.sensor.accelerometer"
-android:required="true" />
-```
-<ul>
 <li>Setting up user permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
 </ul>
 
 ```java
 
-// DEVICE_POWER – We need to know the power state of device to conserve battery
-// GET_TASKS – We use it to find out the current running tasks and measure our tasks' battery usage for performance.
-// BATTERY_STATS – Used to find out battery statistics.
-// WRITE_EXTERNAL STORAGE – Used to write the logs and database files.
+// WRITE_EXTERNAL STORAGE – Used to write logs.
+// READ_LOGS – Read logs for ACRA.
 // INTERNET – Used to upload/downlaod the data to and from the cloud.
-// ACCESS_COARSE_LOCATION – Used to find out location; required to find out in-vehicle activity.
-// RECEIVE_BOOT_COMPLETED - Find out if the system has finished booting, and start our service.
-// READ_LOGS – Read the ACRA logs.
-// WAKE_LOCK – To keep processor from sleeping and optimizing algorithm vs battery use.
 // READ_PHONE_STATE - To read the user profile
-// ACCESS_NETWORK_STATE – Allows the application to read network state, useful for in-vehicle activity and places prediction.
-// ACCESS_WIFI_STATE - Allows the application to read WiFi state, useful for in-vehicle activity and places prediction.
+// ACCESS_NETWORK_STATE – Allows the application to read network state, and check for internet availability.
+// RECEIVE_BOOT_COMPLETED - Find out if the system has finished booting, and start our service.
+// WAKE_LOCK – To keep processor from sleeping and optimizing algorithm vs battery use.
+// ACCESS_COARSE_LOCATION – Used to find out location; required to find out in-vehicle activity and places detection.
 // c2dm.permission.RECEIVE - Allow push messages for rules
 // permission.C2D_MESSAGE - Allow executing rules
-
-
-// Mandatory Permissions
-<uses-permission android:name="android.permission.DEVICE_POWER" />
-<uses-permission android:name="android.permission.GET_TASKS" />
-<uses-permission android:name="android.permission.BATTERY_STATS" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-<uses-permission android:name="android.permission.READ_LOGS" />
-<uses-permission android:name="android.permission.WAKE_LOCK" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-<uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
-
-
+// VIBRATE - Used for push handling system
 // READ_HISTORY_BOOKMARKS - Allows for better prediction
 // READ_SMS - Allows for better prediction
 // GET_ACCOUNTS - allows for better prediction
-// VIBRATE - Used for feedback
 
-// Optional Permissions
-<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-<uses-permission android:name="android.permission.READ_SMS" />
-<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission android:name="android.permission.VIBRATE" />
+
+// Mandatory Permissions
+    <!-- Mandatory for error Logging -->    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    
+    <!-- Mandatory for registering app to Semusi analytics, checking internet connectivity, 
+    	getting Device ID and IMEI -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
+    <!-- Mandatory for background functionality of app -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Mandatory for app start on boot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
+// Optional - Use as per desired functionality
+    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Mandatory for Rule Handling -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
+
+    <!-- Optional for better prediction -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    
 ```
 
 <ul>
