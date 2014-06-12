@@ -119,6 +119,11 @@ This is how your directory structure should look like.<br><br>
 ```
 
 ```java
+// This is the core service which is used to receive campaign events
+<service android:name="semusi.ruleengine.rulemanager.RuleGatherService" />
+```
+
+```java
 // A receiver, for boot completed intent, which is majorly used by our services to know when the phone has been rebooted and finished booting, so we could restart our STICKY services.
 <receiver android:name="semusi.mlservice.OnAlarmReceiver" >
 <intent-filter>
@@ -359,6 +364,27 @@ if(pedometerData[0] != null) {
 	{
 		pedometerCount = pedometerData[i].getPedometerCount();
 		pedometerCalories = pedometerData[i].getPedometerCountCalories();
+	}
+}
+```
+
+
+<b>Campaign Event Listener</b>
+Below code is used to capture campaign events
+
+```java
+public class CampaignEventReceiver extends BroadcastReceiver {
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		String notificationType = intent.getStringExtra("NotificationType");
+		String ContentType = intent.getStringExtra("ContentType");
+		String ContentData = intent.getStringExtra("ContentData");
+
+		System.out.println("CampaignEvent Recevied of NotificationType: "
+				+ notificationType + " , ofContentType: " + ContentType
+				+ " , withContent: " + ContentData);
+
 	}
 }
 ```
