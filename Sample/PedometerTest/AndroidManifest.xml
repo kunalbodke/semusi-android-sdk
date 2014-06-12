@@ -9,23 +9,26 @@
         android:targetSdkVersion="17" />
 
     <!-- Required permission for SDK -->
-    <!-- Use for battery optimization -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.DEVICE_POWER" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.BATTERY_STATS" />
 
+    <!-- BEGIN Mandatory Permissions -->
     <!-- For error Logging -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <!-- Required for registering app to Semusi analytics -->
+    <!-- Required for registering app to Semusi analytics, checking internet connectivity, 
+    	getting Device ID and IMEI -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     
     <!-- Required for background functionality of app -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     
     <!-- Required for app start on boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    <!-- END Mandatory Permissions -->
+    
     <!-- End of required permissions -->
     
 

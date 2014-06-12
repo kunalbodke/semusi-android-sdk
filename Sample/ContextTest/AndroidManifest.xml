@@ -9,32 +9,48 @@
         android:targetSdkVersion="17" />
 
     <!-- Required permission for SDK -->
-    <uses-permission android:name="android.permission.DEVICE_POWER" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    
+    <!-- BEGIN Mandatory Permissions -->
+
+    <!-- Mandatory for error Logging -->    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
+    <!-- Mandatory for registering app to Semusi analytics, checking internet connectivity, 
+    	getting Device ID and IMEI -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
+    <!-- Mandatory for background functionality of app -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Mandatory for app start on boot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- END Mandatory Permissions -->
+        
+    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional for better prediction -->
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    
+    <!-- Mandatory for Rule Handling -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
+    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />    
+    
     <permission
         android:name="com.example.contexttest.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />
+    <!-- End Required permission by Rule Handling -->
+    
     <!-- End of required permissions -->
 
 
@@ -68,12 +84,26 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name="semusi.context.location.GeoFenceListener"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.crowdradar.geofence.ACTION_RECEIVE_GEOFENCE" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name="semusi.ruleengine.rulemanager.RuleTimerEventHandler"
             android:enabled="true" />
+        <receiver android:name="com.example.contexttest.CampaignEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.CampaignEvent" >
+                </action>
+            </intent-filter>
+        </receiver>
         <!-- End of sdk services -->
 
 
         <!-- Required Meta-Data keys for SemusiSDK -->
+        <!--
         <meta-data
             android:name="com.semusi.analytics.appid"
             android:value="5333c369c78850a41500001d" />
@@ -83,6 +113,17 @@
         <meta-data
             android:name="com.semusi.analytics.apikey"
             android:value="32c971296df6024cee27c656c05803fa" />
+        -->
+
+        <meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="5369d31bdd6026bb6e000003" />
+        <meta-data
+            android:name="com.semusi.analytics.appkey"
+            android:value="cf521dd7e3b81b80a05cd8d997782b8aaf21012a" />
+        <meta-data
+            android:name="com.semusi.analytics.apikey"
+            android:value="2aab4f2daa69e86768ff7c44df9ce731" />
         <!-- End of required meta-data -->
 
 
