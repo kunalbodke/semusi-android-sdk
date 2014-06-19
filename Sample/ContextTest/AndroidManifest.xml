@@ -9,48 +9,59 @@
         android:targetSdkVersion="17" />
 
     <!-- Required permission for SDK -->
-    
+
+
     <!-- BEGIN Mandatory Permissions -->
 
-    <!-- Mandatory for error Logging -->    
+
+    <!-- Mandatory for error Logging -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    
-    <!-- Mandatory for registering app to Semusi analytics, checking internet connectivity, 
-    	getting Device ID and IMEI -->
+
+    <!--
+         Mandatory for registering app to Semusi analytics, checking internet connectivity, 
+    	getting Device ID and IMEI
+    -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!-- Mandatory for background functionality of app -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- Mandatory for app start on boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- END Mandatory Permissions -->
-        
-    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Optional for better prediction -->
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-    
     <!-- Mandatory for Rule Handling -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />    
+    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />
+
+    <!-- END Mandatory Permissions -->
+
+
+    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional for Places -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
+    <!-- Optional for better prediction -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+
     <permission
         android:name="com.example.contexttest.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- End Required permission by Rule Handling -->
-    
+
+
     <!-- End of required permissions -->
 
 

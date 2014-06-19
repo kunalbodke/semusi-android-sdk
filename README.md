@@ -69,11 +69,6 @@ This is how your directory structure should look like.<br><br>
     <!-- Mandatory for app start on boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
-// Optional - Use as per desired functionality
-    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <!-- Mandatory for Rule Handling -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -81,6 +76,14 @@ This is how your directory structure should look like.<br><br>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
 
+// Optional - Use as per desired functionality
+    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional for Places -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
     <!-- Optional for better prediction -->
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
