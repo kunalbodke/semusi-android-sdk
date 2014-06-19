@@ -81,6 +81,7 @@ This is how your directory structure should look like.<br><br>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Optional for Places -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
