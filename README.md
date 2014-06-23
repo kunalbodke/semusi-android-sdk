@@ -217,7 +217,7 @@ Here is the process for getting the AppID, AppKey, and APIKey
             android:name="com.urbanairship.autopilot"
             android:value="ruleengine.pushmanager.UAAutoPilotRecevier" />
 
-        <receiver android:name="ruleengine.pushmanager.UAPushIntentReceiver" />
+        <receiver android:name="semusi.ruleengine.pushmanager.UAPushIntentReceiver" />
         <!-- PushHandling Entry end -->
 ```
 
