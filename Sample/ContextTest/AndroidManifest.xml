@@ -113,7 +113,6 @@
 
 
         <!-- Required Meta-Data keys for SemusiSDK -->
-        <!--
         <meta-data
             android:name="com.semusi.analytics.appid"
             android:value="5333c369c78850a41500001d" />
@@ -123,18 +122,7 @@
         <meta-data
             android:name="com.semusi.analytics.apikey"
             android:value="32c971296df6024cee27c656c05803fa" />
-        -->
-
-        <meta-data
-            android:name="com.semusi.analytics.appid"
-            android:value="5369d31bdd6026bb6e000003" />
-        <meta-data
-            android:name="com.semusi.analytics.appkey"
-            android:value="cf521dd7e3b81b80a05cd8d997782b8aaf21012a" />
-        <meta-data
-            android:name="com.semusi.analytics.apikey"
-            android:value="2aab4f2daa69e86768ff7c44df9ce731" />
-        <!-- End of required meta-data -->
+		<!-- End of required meta-data -->
 
 
         <!-- PushHandling setup start -->
