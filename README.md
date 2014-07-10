@@ -19,10 +19,13 @@ The min. SDK version for your application should be 9 while targetSDKVersion can
 <li>Put the contextsdk.jar in the libs folder, and that's it.</li>
 </ul>
 
-This is how your directory structure should look like.<br><br>
-<img src="http://semusi.com/images/Semusi-Context-Aware-SDK-Directory-Structure_1.png"></img>
+This is how your directory structure should look like.<br>
+Also your application need to be connected with playservices library project.<br><br>
+<img src="http://semusi.com/images/semusi_context_sdk_lib.png"></img>
 
-Also your application need to be connected with playservices library project.
+Also adding android support library is required.<br><br>
+<img src="http://semusi.com/images/semusi_add_support_lib.png"></img>
+
 
 
 <b>Semusi SDK Directory Structure</b>
