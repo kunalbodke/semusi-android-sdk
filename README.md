@@ -1,31 +1,21 @@
 semusi-android-sdk
 ==================
 
-Android SDK code of Semusi Context SDK, Use it to enrich your Android apps with the power of context
+Android SDK code of Semusi Context SDK. Use it to enrich your Android apps with the power of context.
 
 <b>Getting Started</b><br>
-In this tutorial we will guide you through the process of creating a hello world package that uses Semusi service to find out which activities are being performed by the user, what is the current context and how many calories are being burnt in this process. The Semusi service also tells you the user demographics - the gender, height and weight of the user, along with the current place i.e. work, home, in-transit, other. We also give you user-specific analytics through our Semusi Analytics site, and to take action based on these contexts.
+In this tutorial we will guide you through the process of creating a hello world package that uses Semusi service to find out which activities are being performed by the user, what is the current context and how many calories are being burnt in this process. The Semusi service also tells you the user demographics - the gender, height and weight of the user, along with the current place e.g. work, home, in-transit. We also give you the option to take targetted action based on these contexts through our Semusi website.
 
-The Semusi Service API consists of an Android service and a base API, both Service and the API are coupled in the JAR provided with the SDK bundle.
+The Semusi Service API consists of an Android service and a base API. The Service and API are available as an Android library project.
 
-The Semusi service need to use a number of resources in order to be able to track the user’s activities under all conditions, and make sure that the service doesn’t get killed if the phone is under stress, or of any reason; Don’t worry about its battery consumption as it is optimized and your users won’t complain.
+The Semusi service need to use a number of resources in order to be able to track the user’s activities under all conditions, and make sure that the service doesn’t get killed if the phone is under stress or due to other reasons. You don’t need to worry about its battery consumption as it is highly optimized and your users won’t complain.
 
-We’ll see what permissions are those and how they help us; the base API however uses Internet as well so internet permissions will also be required.
-
-The min. SDK version for your application should be 9 while targetSDKVersion can be 19.
+Your application should have a minSdkVersion 9 and the targetSDKVersion may be 19.
 
 <b>Step 1</b><br>
 <ul>
-<li>Put the contextsdk.jar in the libs folder, and that's it.</li>
+<li>Add the semusi_sdk_lib project as a library in your application along with the google-play-services_lib, and that's it.</li>
 </ul>
-
-This is how your directory structure should look like.<br>
-Also your application need to be connected with playservices library project.<br><br>
-<img src="http://semusi.com/images/semusi_context_sdk_lib.png"></img>
-
-Also adding android support library is required.<br><br>
-<img src="http://semusi.com/images/semusi_add_support_lib.png"></img>
-
 
 
 <b>Semusi SDK Directory Structure</b>
@@ -36,7 +26,7 @@ Also adding android support library is required.<br><br>
 </ul>
 
 <ul>
-<li>Setting up user permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
+<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib AndroidManifest.xml file.</li>
 </ul>
 
 ```java
@@ -62,7 +52,7 @@ Also adding android support library is required.<br><br>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     
-    <!-- Mandatory for registering app to Semusi analytics, checking internet connectivity, 
+    <!-- Mandatory for registering app to Semusi website, checking internet connectivity, 
     	getting Device ID and IMEI -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -75,18 +65,17 @@ Also adding android support library is required.<br><br>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- Mandatory for Rule Handling -->
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="YOUR.PACKAGE.NAME.permission.C2D_MESSAGE" />
 
 // Optional - Use as per desired functionality
     <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Optional for Places -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
@@ -98,7 +87,7 @@ Also adding android support library is required.<br><br>
 ```
 
 <ul>
-<li>Setting up C2D permissions – Copy and paste these permissions in your AndroidManifest.xml file.</li>
+<li>Setting up C2D permissions – Replace YOUR.PACKAGE.NAME by your app package name in the semusi_sdk_lib AndroidManifest.xml file.</li>
 </ul>
 ```java
 <permission
@@ -117,7 +106,6 @@ Also adding android support library is required.<br><br>
 <li>Setting up services and recievers – Let us setup our services and recievers in the same AndroidManifest.xml</li>
 </ul>
 ```java
-// Copy over this xml to your androidmanifest.xml
 // The base API service, which is responsible for making sure that the core services collecting and analyzing the data keep running
 <service android:name="semusi.activitysdk.Api" />
 ```
@@ -141,6 +129,10 @@ Also adding android support library is required.<br><br>
 </intent-filter>
 </receiver>
 
+// Receivers to handle custom geofence places.
+<receiver android:name="semusi.context.places.CustomGeoFenceListener" />
+<receiver android:name="semusi.context.places.NativeGeoFenceListener" />
+
 // A receiver for rule execution.
 <receiver
     android:name="ruleengine.rulemanager.RuleTimerEventHandler"
@@ -148,15 +140,18 @@ Also adding android support library is required.<br><br>
 
 ```
 
-Here is the process for getting the AppID, AppKey, and APIKey
+Here is the process for getting the AppID, AppKey, and APIKey - 
 
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A45%3A12.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A45%3A24.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A54%3A00.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A54%3A15.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+12%3A59%3A26.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+13%3A03%3A00.png"></img>
-<img src="https://s3.amazonaws.com/git_images/Screenshot+from+2014-04-07+13%3A03%3A10.png"></img>
+Login at <a href="dashboard.semusi.com">dashboard.semusi.com</a>
+
+<img src="https://s3.amazonaws.com/git_images/01_login_20140722.png"></img>
+
+
+Create a new campaign for your application. Click on the settings icon as highlighted to get your API Key, App Key, App ID - 
+<img src="https://s3.amazonaws.com/git_images/02_dashboard_20140722.png"></img>
+
+<img src="https://s3.amazonaws.com/git_images/03_AppID_20140722.png"></img>
+
 
 ```java
 // You need to login/register for Semusi SDK features. Use the keys provided, and add below.
@@ -179,52 +174,6 @@ Here is the process for getting the AppID, AppKey, and APIKey
 ```
 
 ```java
-<!-- PushHandling setup start -->
-        <receiver android:name="com.urbanairship.CoreReceiver" />
-        <receiver
-            android:name="com.urbanairship.push.GCMPushReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="YOUR.PACKAGE.NAME" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.YOUR.PACKAGE.NAME" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.urbanairship.push.PushService"
-            android:label="Push Notification Service" />
-        <service
-            android:name="com.urbanairship.push.PushWorkerService"
-            android:label="Push Notification Worker Service" />
-        <service
-            android:name="com.urbanairship.analytics.EventService"
-            android:label="Event Service" />
-
-        <provider
-            android:name="com.urbanairship.UrbanAirshipProvider"
-            android:authorities="YOUR.PACKAGE.NAME.urbanairship.provider"
-            android:exported="false"
-            android:multiprocess="true" />
-
-        <service android:name="com.urbanairship.richpush.RichPushUpdateService" />
-        <service
-            android:name="com.urbanairship.location.LocationService"
-            android:label="Segments Service" />
-
-        <meta-data
-            android:name="com.urbanairship.autopilot"
-            android:value="ruleengine.pushmanager.UAAutoPilotRecevier" />
-
-        <receiver android:name="semusi.ruleengine.pushmanager.UAPushIntentReceiver" />
-        <!-- PushHandling Entry end -->
-```
 
 
 <b>Step 3</b>
@@ -259,19 +208,6 @@ import semusi.util.constants.EnumConstants;
 import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
 import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
 ```
-
-<hr>
-
-<b>Libraries</b>
-The Semusi service uses a number of java libraries and natively compiled modules to track the activities facilitate the data retrieval and log the events.
-
-<b>Beta Client Libraries</b>
-Use Caution! These libraries are still in beta phases, so feel free to play with them, but be ready to receive more and more updates, which will make them more solid in future.
-
-<b>Java libraries</b>
-contextsdk.jar - the basic activity tracking service and base api.
-
-<hr>
 
 <b>API Reference</b><br>
 <b>PULL API</b><br>
@@ -363,6 +299,8 @@ Below code is used to get Pedometer Data for a given range of dates. For accessi
 
 ```java
 // Access pedometer history values
+// fromDate - epoch value at 00:00:00 hrs
+// toDate - epoch value at 00:00:00 hrs
 ContextData[] pedometerData = sdk.getPedometerHistory(fromDateEpoch, toDateEpoch);
 
 int pedometerCount = 0;
@@ -386,14 +324,11 @@ public class CampaignEventReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String notificationType = intent.getStringExtra("NotificationType");
-		String ContentType = intent.getStringExtra("ContentType");
-		String ContentData = intent.getStringExtra("ContentData");
+		String extUrl = intent.getStringExtra("Exturl");
+		String clicked = intent.getStringExtra("Clicked");
 
-		System.out.println("CampaignEvent Recevied of NotificationType: "
-				+ notificationType + " , ofContentType: " + ContentType
-				+ " , withContent: " + ContentData);
-
+		System.out.println("CampaignEvent Recevied with ExtUrl : " + extUrl
+				+ " , " + clicked);
 	}
 }
 ```
