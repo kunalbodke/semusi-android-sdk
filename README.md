@@ -173,8 +173,6 @@ Create a new campaign for your application. Click on the settings icon as highli
 <!-- End of required meta-data -->
 ```
 
-```java
-
 
 <b>Step 3</b>
 
