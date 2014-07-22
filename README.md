@@ -22,9 +22,18 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 
 <b>Step 2</b>
 <ul>
+<li>You need to add manifest merger flag into your project's 'project.properties' file.</li>
+</ul>
+```java
+# Project target.
+target=android-19
+manifestmerger.enabled=true
+android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib
+android.library.reference.2=../../semusi_sdk_lib
+```
+<ul>
 <li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
 </ul>
-
 <ul>
 <li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib AndroidManifest.xml file.</li>
 </ul>
