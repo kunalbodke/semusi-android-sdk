@@ -1,0 +1,105 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.semusi.semusi_sdk_lib"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="9" />
+
+    <!-- Required permission for SDK -->
+    <!-- Use for activity recognition, step counting, gender, height, weight detection -->
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="false" />
+
+    <!-- Use for pedometer activity -->
+    <uses-feature
+        android:name="android.hardware.sensor.stepdetector"
+        android:required="false" />
+
+    <!-- BEGIN Mandatory Permissions -->
+    <!-- Mandatory for error Logging -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- Mandatory for registering app -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Mandatory for background functionality of app -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Mandatory for app start on boot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Mandatory for Rule Handling -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />
+
+    <!-- END Mandatory Permissions -->
+
+
+    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional for Places -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Optional for better prediction -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+
+    <permission
+        android:name="com.example.contexttest.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- End Required permission by Rule Handling -->
+    <!-- End of required permissions -->
+
+    <application>
+
+        <!-- Semusi Sdk services and Receivers -->
+        <service android:name="semusi.activitysdk.Api" />
+        <service android:name="semusi.mlservice.SemusiHAR" />
+        <service android:name="semusi.ruleengine.rulemanager.RuleGatherService" />
+
+        <receiver android:name="semusi.mlservice.OnAlarmReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="semusi.context.places.CustomGeoFenceListener" />
+        <receiver android:name="semusi.context.places.NativeGeoFenceListener" />
+        <receiver android:name="semusi.ruleengine.rulemanager.RuleTimerEventHandler" />
+        <!-- End of sdk services -->
+
+
+        <!-- PushHandling setup start -->
+        <receiver
+            android:name="semusi.ruleengine.pushmanager.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.example.contexttest" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="semusi.ruleengine.pushmanager.NotificationEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.NotificationEvent" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="semusi.ruleengine.pushmanager.GcmIntentService" />
+        <!-- PushHandling Entry end -->
+    </application>
+
+</manifest>

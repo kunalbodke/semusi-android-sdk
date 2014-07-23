@@ -8,13 +8,10 @@ public class CampaignEventReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String notificationType = intent.getStringExtra("NotificationType");
-		String ContentType = intent.getStringExtra("ContentType");
-		String ContentData = intent.getStringExtra("ContentData");
+		String extUrl = intent.getStringExtra("Exturl");
+		String clicked = intent.getStringExtra("Clicked");
 
-		System.out.println("CampaignEvent Recevied of NotificationType: "
-				+ notificationType + " , ofContentType: " + ContentType
-				+ " , withContent: " + ContentData);
-
+		System.out.println("CampaignEvent Recevied with ExtUrl : " + extUrl
+				+ " , " + clicked);
 	}
 }

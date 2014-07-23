@@ -1,69 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contexttest"
-    android:versionCode="113"
-    android:versionName="1.0.13" >
+    android:versionCode="114"
+    android:versionName="1.0.14" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="17" />
-
-    <!-- Required permission for SDK -->
-
-
-    <!-- BEGIN Mandatory Permissions -->
-
-
-    <!-- Mandatory for error Logging -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-
-    <!--
-         Mandatory for registering app to Semusi analytics, checking internet connectivity, 
-    	getting Device ID and IMEI
-    -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Mandatory for background functionality of app -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Mandatory for app start on boot -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <!-- Mandatory for Rule Handling -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.example.contexttest.permission.C2D_MESSAGE" />
-
-    <!-- END Mandatory Permissions -->
-
-
-    <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Optional for Places -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    
-    <!-- Optional for better prediction -->
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-
-    <permission
-        android:name="com.example.contexttest.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- End Required permission by Rule Handling -->
-
-
-    <!-- End of required permissions -->
-
 
     <!-- Mention your application class info -->
     <application
@@ -84,96 +27,27 @@
             </intent-filter>
         </activity>
 
-        <!-- Semusi Sdk services and Receivers -->
-        <service android:name="semusi.activitysdk.Api" />
-        <service android:name="semusi.mlservice.SemusiHAR" />
-        <service android:name="semusi.ruleengine.rulemanager.RuleGatherService" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+            
+        <!-- Required Meta-Data keys for SemusiSDK -->
+        <meta-data
+        android:name="com.semusi.analytics.appid"
+        android:value="" />
+        <meta-data
+        android:name="com.semusi.analytics.appkey"
+        android:value="" />
+        <meta-data
+        android:name="com.semusi.analytics.apikey"
+        android:value="" />
+        <!-- End of required meta-data -->
 
-        <receiver android:name="semusi.mlservice.OnAlarmReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="semusi.context.location.GeoFenceListener"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.crowdradar.geofence.ACTION_RECEIVE_GEOFENCE" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="semusi.ruleengine.rulemanager.RuleTimerEventHandler"
-            android:enabled="true" />
         <receiver android:name="com.example.contexttest.CampaignEventReceiver" >
             <intent-filter>
                 <action android:name="com.semusi.CampaignEvent" />
             </intent-filter>
         </receiver>
-        <!-- End of sdk services -->
-
-
-        <!-- Required Meta-Data keys for SemusiSDK -->
-        <meta-data
-            android:name="com.semusi.analytics.appid"
-            android:value="5333c369c78850a41500001d" />
-        <meta-data
-            android:name="com.semusi.analytics.appkey"
-            android:value="39054da3c22aebe7e9136f3e9b557bf7eb2bea40" />
-        <meta-data
-            android:name="com.semusi.analytics.apikey"
-            android:value="32c971296df6024cee27c656c05803fa" />
-		<!-- End of required meta-data -->
-
-
-        <!-- PushHandling setup start -->
-        <receiver android:name="com.urbanairship.CoreReceiver" />
-        <receiver
-            android:name="com.urbanairship.push.GCMPushReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.example.contexttest" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.com.example.contexttest" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.urbanairship.push.PushService"
-            android:label="Push Notification Service" />
-        <service
-            android:name="com.urbanairship.push.PushWorkerService"
-            android:label="Push Notification Worker Service" />
-        <service
-            android:name="com.urbanairship.analytics.EventService"
-            android:label="Event Service" />
-
-        <provider
-            android:name="com.urbanairship.UrbanAirshipProvider"
-            android:authorities="com.example.contexttest.urbanairship.provider"
-            android:exported="false"
-            android:multiprocess="true" />
-
-        <service android:name="com.urbanairship.richpush.RichPushUpdateService" />
-        <service
-            android:name="com.urbanairship.location.LocationService"
-            android:label="Segments Service" />
-
-        <meta-data
-            android:name="com.urbanairship.autopilot"
-            android:value="semusi.ruleengine.pushmanager.UAAutoPilotRecevier" />
-
-        <receiver android:name="semusi.ruleengine.pushmanager.UAPushIntentReceiver" />
-        <!-- PushHandling Entry end -->
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

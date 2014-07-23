@@ -2,19 +2,19 @@ package com.example.contexttest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.json.JSONObject;
 
 import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
 import semusi.activitysdk.ContextSdk;
 import semusi.activitysdk.SdkConfig;
-import semusi.context.utility.Utility;
 import semusi.util.constants.EnumConstants;
 import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
-import semusi.util.constants.EnumConstants.ActivityEnum.ActivityTypeInt;
 import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -139,6 +139,18 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 
+		List<JSONObject> appInterest = currentData.getAppInterestData();
+		for (int i = 0; i < appInterest.size(); i++) {
+			JSONObject obj = appInterest.get(i);
+			System.out.println("Users app interest : " + obj.toString());
+		}
+
+		List<JSONObject> browserInterest = currentData.getBrowserInterestData();
+		for (int i = 0; i < browserInterest.size(); i++) {
+			JSONObject obj = browserInterest.get(i);
+			System.out.println("Users browser interest : " + obj.toString());
+		}
+
 		setBtnUI();
 	}
 
@@ -183,5 +195,4 @@ public class MainActivity extends Activity {
 
 		return epoch_time;
 	}
-
 }
