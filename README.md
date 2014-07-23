@@ -242,6 +242,7 @@ else {
     config.setPedometerTrackingStateAllowed(true);
     config.setPlacesTrackingAllowedState(true);
     config.setRuleEngineEventStateAllowed(true);
+    config.setDebuggingStateAllowed(true);
     
     // start semusi context sensing with config
     // by default all setters are enabled and accuracy level to High
@@ -274,6 +275,36 @@ Below code is used to initialize ContextSdk with context object, and get the cur
 
         //Getting User Places Info and return will be of type 'String'
         String place = currentData.getLocationType();
+        
+        //Getting User Application based user interests
+        List<JSONObject> appInterestArr = currentData.getAppInterestData();
+	for (int i = 0; i < appInterestArr.size(); i++) {
+		JSONObject obj = appInterestArr.get(i);
+		if (obj != null) {
+			try {
+				String topLevel = obj.getString("top");
+				String bottomLevel = obj.getString("bottom");
+				String score = obj.getString("score");
+			} catch (Exception e) {
+				//
+			}
+		}
+	}
+	
+	//Getting User Browser based user interests
+	List<JSONObject> browserInterestArr = currentData.getBrowserInterestData();
+	for (int i = 0; i < browserInterestArr.size(); i++) {
+		JSONObject obj = browserInterestArr.get(i);
+		if (obj != null) {
+			try {
+				String topLevel = obj.getString("top");
+				String bottomLevel = obj.getString("bottom");
+				String score = obj.getString("score");
+			} catch (Exception e) {
+				//
+			}
+		}
+	}
 ```
 
 <b>GetHistoryData API</b>
