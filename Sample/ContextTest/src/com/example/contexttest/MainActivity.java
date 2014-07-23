@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 					SdkConfig config = new SdkConfig();
 					config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
 					config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+					config.setDebuggingStateAllowed(true);
 					Api.startContext(getApplicationContext(), config);
 				}
 			}
@@ -139,17 +140,36 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		List<JSONObject> appInterest = currentData.getAppInterestData();
-		for (int i = 0; i < appInterest.size(); i++) {
-			JSONObject obj = appInterest.get(i);
-			System.out.println("Users app interest : " + obj.toString());
+		List<JSONObject> appInterestArr = currentData.getAppInterestData();
+		String appInterestsStr = "";
+		for (int i = 0; i < appInterestArr.size(); i++) {
+			JSONObject obj = appInterestArr.get(i);
+			if (obj != null) {
+				try {
+					appInterestsStr += obj.getString("top") + " , ";
+				} catch (Exception e) {
+					//
+				}
+			}
 		}
+		TextView appInterestsTv = (TextView) findViewById(R.id.TextView05);
+		appInterestsTv.setText(appInterestsStr);
 
-		List<JSONObject> browserInterest = currentData.getBrowserInterestData();
-		for (int i = 0; i < browserInterest.size(); i++) {
-			JSONObject obj = browserInterest.get(i);
-			System.out.println("Users browser interest : " + obj.toString());
+		List<JSONObject> browserInterestArr = currentData
+				.getBrowserInterestData();
+		String browserInterestsStr = "";
+		for (int i = 0; i < browserInterestArr.size(); i++) {
+			JSONObject obj = browserInterestArr.get(i);
+			if (obj != null) {
+				try {
+					browserInterestsStr += obj.getString("bottom") + " , ";
+				} catch (Exception e) {
+					//
+				}
+			}
 		}
+		TextView browserInterestsTv = (TextView) findViewById(R.id.TextView07);
+		browserInterestsTv.setText(browserInterestsStr);
 
 		setBtnUI();
 	}

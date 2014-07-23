@@ -81,6 +81,19 @@
         <!-- End of sdk services -->
 
 
+        <!-- Required Meta-Data keys for SemusiSDK -->
+        <meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="5333c369c78850a41500001d" />
+        <meta-data
+            android:name="com.semusi.analytics.appkey"
+            android:value="39054da3c22aebe7e9136f3e9b557bf7eb2bea40" />
+        <meta-data
+            android:name="com.semusi.analytics.apikey"
+            android:value="502589d39c0934baed5da3d601a20c1f" />
+        <!-- End of required meta-data -->
+
+
         <!-- PushHandling setup start -->
         <receiver
             android:name="semusi.ruleengine.pushmanager.GcmBroadcastReceiver"
