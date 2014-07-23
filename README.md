@@ -151,13 +151,17 @@ android.library.reference.2=../../semusi_sdk_lib
 
 Here is the process for getting the AppID, AppKey, and APIKey - 
 
-Login at <a href="dashboard.semusi.com">dashboard.semusi.com</a>
+1. Login at <a href="dashboard.semusi.com">dashboard.semusi.com</a>
+
 
 <img src="https://s3.amazonaws.com/git_images/01_login_20140722.png"></img>
 
 
-Create a new campaign for your application. Click on the settings icon as highlighted to get your API Key, App Key, App ID - 
+2. Create a new campaign for your application. Click on the settings icon as highlighted to get your API Key, App Key, App ID - 
+
+
 <img src="https://s3.amazonaws.com/git_images/02_dashboard_20140722.png"></img>
+
 
 <img src="https://s3.amazonaws.com/git_images/03_AppID_20140722.png"></img>
 
