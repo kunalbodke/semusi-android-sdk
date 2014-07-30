@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contexttest"
-    android:versionCode="115"
-    android:versionName="1.0.15" >
+    android:versionCode="117"
+    android:versionName="1.0.17" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -27,21 +27,21 @@
             </intent-filter>
         </activity>
 
-        <!-- Play Services -->
+        <!-- Play service meta-data -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        
+
         <!-- Required Meta-Data keys for SemusiSDK -->
+        <<meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="" />
         <meta-data
-        android:name="com.semusi.analytics.appid"
-        android:value="5333c369c78850a41500001d" />
+            android:name="com.semusi.analytics.appkey"
+            android:value="" />
         <meta-data
-        android:name="com.semusi.analytics.appkey"
-        android:value="39054da3c22aebe7e9136f3e9b557bf7eb2bea40" />
-        <meta-data
-        android:name="com.semusi.analytics.apikey"
-        android:value="502589d39c0934baed5da3d601a20c1f" />
+            android:name="com.semusi.analytics.apikey"
+            android:value="" />
         <!-- End of required meta-data -->
 
         <receiver android:name="com.example.contexttest.CampaignEventReceiver" >
