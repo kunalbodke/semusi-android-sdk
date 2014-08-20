@@ -24,9 +24,20 @@ import semusi.activitysdk.SdkConfig;
 import semusi.util.constants.EnumConstants.ActivityAccuracyEnum.ActivityAccuracyLevel;
 import semusi.util.constants.EnumConstants.ActivityEnum.ActivityTypeInt;
 import semusi.util.constants.EnumConstants.GenderEnum.GenderTypeString;
+import semusi.util.constants.EnumConstants.HeightEnum.HeightTypeString;
 import semusi.util.constants.EnumConstants.LocationEnum.LocationTypeString;
 import semusi.util.constants.EnumConstants.PlacesAccuracyEnum.PlacesAccuracyLevel;
+import semusi.util.constants.EnumConstants.WeightEnum.WeightTypeString;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.Animator.AnimatorListener;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -51,6 +62,7 @@ public class HomeScreen extends Activity {
 
 	boolean isInterestShown = false;
 	boolean isActivityShown = false;
+	boolean isDemographicsShown = false;
 
 	ArrayList<Interests> appInterestArr;
 	InterestTokens appInterestView;
@@ -77,6 +89,9 @@ public class HomeScreen extends Activity {
 	CategorySeries mActivityDurationSeries = new CategorySeries(
 			"Activity Duration");
 	DefaultRenderer mActivityDurationRenderer = null;
+
+	GoogleMap mapView = null;
+	boolean animated = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,11 +120,20 @@ public class HomeScreen extends Activity {
 		ImageView interestArrow = (ImageView) findViewById(R.id.imageView8);
 		interestArrow.setImageResource(R.drawable.arrow_top);
 
+		mapView = ((MapFragment) getFragmentManager().findFragmentById(
+				R.id.mapView)).getMap();
+
 		// If semusi is not sensing
 		boolean isApiRunning = ContextSdk
 				.isSemusiSensing(getApplicationContext());
 		if (isApiRunning == false) {
 			SdkConfig config = new SdkConfig();
+			// config.setActivityTrackingAllowedState(false);
+			// config.setAnalyticsTrackingAllowedState(false);
+			// config.setDemographicsTrackingAllowedState(false);
+			// config.setPedometerTrackingStateAllowed(false);
+			// config.setPlacesTrackingAllowedState(false);
+			// config.setRuleEngineEventStateAllowed(true);
 			config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
 			config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
 			config.setDebuggingStateAllowed(true);
@@ -223,6 +247,7 @@ public class HomeScreen extends Activity {
 
 		// set background image
 		RelativeLayout rootView = (RelativeLayout) findViewById(R.id.root);
+
 		// set gender type
 		GenderTypeString genderTypeData = currentData.getGenderType();
 		ImageView genderImgView = (ImageView) findViewById(R.id.imageView2);
@@ -236,6 +261,34 @@ public class HomeScreen extends Activity {
 			genderImgView.setBackgroundResource(R.drawable.gender_na_icon);
 			rootView.setBackgroundResource(R.drawable.background_male);
 		}
+
+		// set height type
+		HeightTypeString heightTypeData = currentData.getHeightType();
+		TextView heightTxtView = (TextView) findViewById(R.id.textView7);
+		if (heightTypeData.equals(HeightTypeString.NOHEIGHTVALUE)) {
+			heightTxtView.setText("--");
+		} else if (heightTypeData.equals(HeightTypeString.SHORT)) {
+			heightTxtView.setText("Short");
+		} else if (heightTypeData.equals(HeightTypeString.MEDIUM)) {
+			heightTxtView.setText("Medium");
+		} else if (heightTypeData.equals(HeightTypeString.TALL)) {
+			heightTxtView.setText("Tall");
+		}
+
+		// set weight type
+		WeightTypeString weightTypeData = currentData.getWeightType();
+		TextView weightTxtView = (TextView) findViewById(R.id.textView7);
+		if (weightTypeData.equals(WeightTypeString.NOWEIGHTVALUE)) {
+			weightTxtView.setText("--");
+		} else if (weightTypeData.equals(WeightTypeString.LIGHT)) {
+			weightTxtView.setText("Short");
+		} else if (weightTypeData.equals(WeightTypeString.MEDIUM)) {
+			weightTxtView.setText("Medium");
+		} else if (weightTypeData.equals(WeightTypeString.HEAVY)) {
+			weightTxtView.setText("Tall");
+		}
+
+		// TextView02
 
 		// set activity type
 		ActivityTypeInt activityType = currentData.getActivityType();
@@ -282,6 +335,8 @@ public class HomeScreen extends Activity {
 			placeImgView.setBackgroundResource(R.drawable.places_theater_icon);
 		} else if (locationType == LocationTypeString.TRANSPORT) {
 			placeImgView.setBackgroundResource(R.drawable.places_transit_icon);
+		} else if (locationType == LocationTypeString.OTHER) {
+			placeImgView.setBackgroundResource(R.drawable.places_other_icon);
 		} else {
 			placeImgView.setBackgroundResource(R.drawable.acitivity_na_icon);
 		}
@@ -314,6 +369,45 @@ public class HomeScreen extends Activity {
 				ActivityTypeInt.VehicleActivity.getActivityValue(),
 				ActivityTypeInt.WalkingActivity.getActivityValue());
 		showActivityChart(activityHistory);
+
+		// Updating maps layer
+		mapView.clear();
+		LatLngBounds.Builder builder = new LatLngBounds.Builder();
+		try {
+			LatLng homeLoc = new LatLng(currentData.getHomeLocation()
+					.getLatitude(), currentData.getHomeLocation()
+					.getLongitude());
+			mapView.addMarker(new MarkerOptions().position(homeLoc).title(
+					"Home"));
+			mapView.addCircle(new CircleOptions().center(homeLoc)
+					.radius(currentData.getHomeLocation().getAccuracy())
+					.strokeColor(Color.BLACK).fillColor(Color.TRANSPARENT));
+			builder.include(homeLoc);
+		} catch (Exception e) {
+		}
+		try {
+			LatLng officeLoc = new LatLng(currentData.getOfficeLocation()
+					.getLatitude(), currentData.getOfficeLocation()
+					.getLongitude());
+			mapView.addMarker(new MarkerOptions().position(officeLoc).title(
+					"Work"));
+			mapView.addCircle(new CircleOptions().center(officeLoc)
+					.radius(currentData.getOfficeLocation().getAccuracy())
+					.strokeColor(Color.BLACK).fillColor(Color.TRANSPARENT));
+			builder.include(officeLoc);
+		} catch (Exception e) {
+		}
+		try {
+			LatLngBounds bounds = builder.build();
+			if (animated == false) {
+				CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+						100, 100, 0);
+				mapView.animateCamera(cu);
+				animated = true;
+			}
+		} catch (IllegalStateException e) {
+		} catch (Exception e) {
+		}
 	}
 
 	public void doSlideInterestView(View view) {
@@ -329,6 +423,8 @@ public class HomeScreen extends Activity {
 		activityLayout.setVisibility(View.GONE);
 		LinearLayout interestLayout = (LinearLayout) findViewById(R.id.interestlayout);
 		interestLayout.setVisibility(View.VISIBLE);
+		LinearLayout demographicsLayout = (LinearLayout) findViewById(R.id.demographicslayout);
+		demographicsLayout.setVisibility(View.GONE);
 
 		RelativeLayout myView = (RelativeLayout) findViewById(R.id.root);
 		ObjectAnimator animation = ObjectAnimator.ofFloat(myView,
@@ -377,6 +473,8 @@ public class HomeScreen extends Activity {
 		activityLayout.setVisibility(View.VISIBLE);
 		LinearLayout interestLayout = (LinearLayout) findViewById(R.id.interestlayout);
 		interestLayout.setVisibility(View.GONE);
+		LinearLayout demographicsLayout = (LinearLayout) findViewById(R.id.demographicslayout);
+		demographicsLayout.setVisibility(View.GONE);
 
 		RelativeLayout myView = (RelativeLayout) findViewById(R.id.root);
 		ObjectAnimator animation = ObjectAnimator.ofFloat(myView,
@@ -440,12 +538,55 @@ public class HomeScreen extends Activity {
 		interestArrow.setImageResource(R.drawable.arrow_left);
 	}
 
+	public void doSlideDemographicsView(View view) {
+		if (!isDemographicsShown) {
+			doSlideDemographicsLeft();
+		} else {
+			doSlideDemographicsRight();
+		}
+	}
+
+	public void doSlideDemographicsLeft() {
+		LinearLayout activityLayout = (LinearLayout) findViewById(R.id.activitylayout);
+		activityLayout.setVisibility(View.GONE);
+		LinearLayout interestLayout = (LinearLayout) findViewById(R.id.interestlayout);
+		interestLayout.setVisibility(View.GONE);
+		LinearLayout demographicsLayout = (LinearLayout) findViewById(R.id.demographicslayout);
+		demographicsLayout.setVisibility(View.VISIBLE);
+
+		RelativeLayout myView = (RelativeLayout) findViewById(R.id.root);
+		ObjectAnimator animation = ObjectAnimator.ofFloat(myView,
+				"translationX", 0.0f, 1 * getSceenPercent(WH.WIDTH, 75f));
+		animation.setDuration(500);
+		animation.setRepeatCount(0);
+		animation.start();
+		isDemographicsShown = !isDemographicsShown;
+
+		ImageView demographicsArrow = (ImageView) findViewById(R.id.imageView1);
+		demographicsArrow.setImageResource(R.drawable.arrow_left);
+	}
+
+	public void doSlideDemographicsRight() {
+		RelativeLayout myView = (RelativeLayout) findViewById(R.id.root);
+		ObjectAnimator animation = ObjectAnimator.ofFloat(myView,
+				"translationX", 1 * getSceenPercent(WH.WIDTH, 75f), 0.0f);
+		animation.setDuration(500);
+		animation.setRepeatCount(0);
+		animation.start();
+		isDemographicsShown = !isDemographicsShown;
+
+		ImageView demographicsArrow = (ImageView) findViewById(R.id.imageView1);
+		demographicsArrow.setImageResource(R.drawable.arrow_right);
+	}
+
 	@Override
 	public void onBackPressed() {
 		if (isInterestShown) {
 			doSlideInterestDown();
 		} else if (isActivityShown) {
 			doSlideActivityRight();
+		} else if (isDemographicsShown) {
+			doSlideDemographicsRight();
 		} else {
 			super.onBackPressed();
 		}
@@ -515,9 +656,9 @@ public class HomeScreen extends Activity {
 			layout.addView(mActivityCaloriesChartView, new LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		} else {
-//			mActivityCaloriesChartView = ChartFactory.getPieChartView(this,
-//					mActivityDurationSeries, mActivityCaloriesRenderer);
-//			mActivityCaloriesChartView.repaint();
+			// mActivityCaloriesChartView = ChartFactory.getPieChartView(this,
+			// mActivityDurationSeries, mActivityCaloriesRenderer);
+			// mActivityCaloriesChartView.repaint();
 		}
 
 		if (mActivityDurationChartView == null) {
@@ -527,9 +668,9 @@ public class HomeScreen extends Activity {
 			layout.addView(mActivityDurationChartView, new LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		} else {
-//			mActivityDurationChartView = ChartFactory.getPieChartView(this,
-//				mActivityDurationSeries, mActivityDurationRenderer);
-//			mActivityDurationChartView.repaint();
+			// mActivityDurationChartView = ChartFactory.getPieChartView(this,
+			// mActivityDurationSeries, mActivityDurationRenderer);
+			// mActivityDurationChartView.repaint();
 		}
 	}
 

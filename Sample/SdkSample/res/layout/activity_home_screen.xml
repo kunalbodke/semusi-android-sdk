@@ -38,15 +38,21 @@
                 android:orientation="vertical"
                 android:visibility="visible" >
 
-                <com.semusi.sample.InterestTokens
-                    android:id="@+id/appInterestViewLayout"
+                <ScrollView
+                    android:id="@+id/scrollView1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_margin="10dp"
-                    android:layout_weight="0.50"
-                    android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:gravity="top" />
+                    android:layout_weight="0.50" >
+
+                    <com.semusi.sample.InterestTokens
+                        android:id="@+id/appInterestViewLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:enabled="false"
+                        android:gravity="top" />
+                </ScrollView>
 
                 <ImageView
                     android:id="@+id/imageView6"
@@ -54,15 +60,21 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/line_white" />
 
-                <com.semusi.sample.InterestTokens
-                    android:id="@+id/browserInterestViewLayout"
+                <ScrollView
+                    android:id="@+id/scrollView2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_margin="10dp"
-                    android:layout_weight="0.50"
-                    android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:gravity="top" />
+                    android:layout_weight="0.50" >
+
+                    <com.semusi.sample.InterestTokens
+                        android:id="@+id/browserInterestViewLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:enabled="false"
+                        android:gravity="top" />
+                </ScrollView>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -126,6 +138,130 @@
                     android:enabled="false" />
             </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/demographicslayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".25"
+            android:background="@android:color/darker_gray" >
+
+            <ImageView
+                android:id="@+id/demographicsheaderimge"
+                android:layout_width="5dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/header_shadow_right" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/demographicsheaderimge"
+                android:background="@android:color/transparent"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.50"
+                    android:background="@android:color/transparent"
+                    android:enabled="false"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Your Height : "
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/textView6"
+                        android:layout_below="@+id/textView6"
+                        android:layout_marginTop="102dp"
+                        android:text="Your Weight : "
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView6"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="Tall"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/TextView01"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/textView6"
+                        android:text="Heavy"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@android:color/black" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/line_white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.50"
+                    android:background="@android:color/transparent"
+                    android:enabled="false"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Your Locations"
+                        android:textColor="@android:color/black" />
+
+                    <fragment
+                        android:id="@+id/mapView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textView5"
+                        android:layout_marginTop="5dp"
+                        class="com.google.android.gms.maps.MapFragment" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".75"
+            android:background="@android:color/white" >
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -277,7 +413,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/linearLayout3"
-            android:layout_marginLeft="10dp" >
+            android:layout_marginLeft="10dp"
+            android:onClick="doSlideDemographicsView" >
 
             <ImageView
                 android:id="@+id/imageView1"
