@@ -18,6 +18,14 @@
         android:name="android.hardware.sensor.stepdetector"
         android:required="false" />
 
+    <!-- Use for Places manager -->
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+
     <!-- BEGIN Mandatory Permissions -->
     <!-- Mandatory for error Logging -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -46,7 +54,7 @@
     <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    
+
     <!-- Optional for Places -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -74,8 +82,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="semusi.context.places.CustomGeoFenceListener" />
-        <receiver android:name="semusi.context.places.NativeGeoFenceListener" />
         <receiver android:name="semusi.ruleengine.rulemanager.RuleTimerEventHandler" />
         <!-- End of sdk services -->
 
@@ -99,6 +105,19 @@
 
         <service android:name="semusi.ruleengine.pushmanager.GcmIntentService" />
         <!-- PushHandling Entry end -->
+
+
+        <!-- Places setup start -->
+        <service android:name="semusi.context.locationfinder.LocationBroadcastService" />
+
+        <receiver android:name="semusi.context.locationfinder.StartupBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="semusi.context.locationfinder.PassiveLocationChangedReceiver" />
+        <!-- Places setup end -->
+
     </application>
 
 </manifest>

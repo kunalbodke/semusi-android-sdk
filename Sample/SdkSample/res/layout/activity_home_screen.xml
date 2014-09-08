@@ -45,13 +45,15 @@
                     android:layout_margin="10dp"
                     android:layout_weight="0.50" >
 
-                    <com.semusi.sample.InterestTokens
+                    <TextView
                         android:id="@+id/appInterestViewLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:enabled="false"
-                        android:gravity="top" />
+                        android:gravity="top"
+                        android:textColor="@android:color/black"
+                        android:textSize="22dp" />
                 </ScrollView>
 
                 <ImageView
@@ -67,13 +69,15 @@
                     android:layout_margin="10dp"
                     android:layout_weight="0.50" >
 
-                    <com.semusi.sample.InterestTokens
+                    <TextView
                         android:id="@+id/browserInterestViewLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:enabled="false"
-                        android:gravity="top" />
+                        android:gravity="top"
+                        android:textColor="@android:color/black"
+                        android:textSize="22dp" />
                 </ScrollView>
             </LinearLayout>
         </RelativeLayout>
@@ -367,12 +371,31 @@
             android:onClick="doSlideInterestView"
             android:orientation="vertical" >
 
-            <ImageButton
-                android:id="@+id/imageButton1"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/intrest_icon"
-                android:onClick="doSlideInterestView" />
+                android:layout_height="wrap_content" >
+
+                <com.todddavies.components.progressbar.ProgressWheel
+                    xmlns:app="http://schemas.android.com/apk/res/com.semusi.sdksample"
+                    android:id="@+id/interest_spinner"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:visibility="visible"
+                    app:barColor="#87A60D"
+                    app:barLength="25dp"
+                    app:barWidth="5dp"
+                    app:rimColor="@android:color/transparent"
+                    app:rimWidth="5dp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/intrest_icon"
+                    android:onClick="doSlideInterestView" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -409,6 +432,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -429,6 +453,22 @@
                 android:layout_marginLeft="25dp"
                 android:background="@drawable/gender_male_icon" />
         </LinearLayout>
+
+        <com.todddavies.components.progressbar.ProgressWheel
+            xmlns:app="http://schemas.android.com/apk/res/com.semusi.sdksample"
+            android:id="@+id/gender_spinner"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="25dp"
+            android:visibility="visible"
+            app:barColor="#87A60D"
+            app:barLength="25dp"
+            app:barWidth="15dp"
+            app:rimColor="@android:color/transparent"
+            app:rimWidth="15dp" />
     </RelativeLayout>
 
 </RelativeLayout>
