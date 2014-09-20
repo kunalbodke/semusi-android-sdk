@@ -138,15 +138,47 @@ android.library.reference.2=../../semusi_sdk_lib
 </intent-filter>
 </receiver>
 
-// Receivers to handle custom geofence places.
-<receiver android:name="semusi.context.places.CustomGeoFenceListener" />
-<receiver android:name="semusi.context.places.NativeGeoFenceListener" />
-
 // A receiver for rule execution.
 <receiver
     android:name="ruleengine.rulemanager.RuleTimerEventHandler"
     android:enabled="true" />
+```
 
+```java
+// Receivers to handle Push GCM Services from Semusi servers
+<!-- PushHandling setup start -->
+        <receiver
+            android:name="semusi.ruleengine.pushmanager.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.semusi.sdksample" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="semusi.ruleengine.pushmanager.NotificationEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.NotificationEvent" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="semusi.ruleengine.pushmanager.GcmIntentService" />
+        <!-- PushHandling Entry end -->
+```
+
+```java
+// Services and Reciver to handle Places updates
+        <!-- Places setup start -->
+        <service android:name="semusi.context.locationfinder.LocationBroadcastService" />
+
+        <receiver android:name="semusi.context.locationfinder.StartupBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="semusi.context.locationfinder.PassiveLocationChangedReceiver" />
+        <!-- Places setup end -->
 ```
 
 Here is the process for getting the AppID, AppKey, and APIKey - 
@@ -171,7 +203,7 @@ Here is the process for getting the AppID, AppKey, and APIKey -
 
 <meta-data
     android:name="com.google.android.gms.version"
-    android:value="4132500" />
+    android:value="@integer/google_play_services_version" />
 
 <!-- Required Meta-Data keys for SemusiSDK -->
 <meta-data
@@ -184,6 +216,19 @@ Here is the process for getting the AppID, AppKey, and APIKey -
     android:name="com.semusi.analytics.apikey"
     android:value="YOUR.APPLICATION.APIKEY" />
 <!-- End of required meta-data -->
+
+<!-- Events receivers from semusi sdk -->
+        <receiver android:name="com.semusi.sample.CampaignEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.CampaignEvent" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.semusi.sample.ContextEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.ContextEvent" />
+            </intent-filter>
+        </receiver>
+
 ```
 
 
@@ -243,9 +288,11 @@ else {
     config.setPlacesTrackingAllowedState(true);
     config.setRuleEngineEventStateAllowed(true);
     config.setDebuggingStateAllowed(true);
+    config.setContinuousSensingAllowed(false);
     
     // start semusi context sensing with config
     // by default all setters are enabled and accuracy level to High
+    // and continous sensing is set to false
     Api.startContext(getApplicationContext(), config);
 }
 ```
@@ -277,34 +324,7 @@ Below code is used to initialize ContextSdk with context object, and get the cur
         String place = currentData.getLocationType();
         
         //Getting User Application based user interests
-        List<JSONObject> appInterestArr = currentData.getAppInterestData();
-	for (int i = 0; i < appInterestArr.size(); i++) {
-		JSONObject obj = appInterestArr.get(i);
-		if (obj != null) {
-			try {
-				String topLevel = obj.getString("top");
-				String bottomLevel = obj.getString("bottom");
-				String score = obj.getString("score");
-			} catch (Exception e) {
-				//
-			}
-		}
-	}
-	
-	//Getting User Browser based user interests
-	List<JSONObject> browserInterestArr = currentData.getBrowserInterestData();
-	for (int i = 0; i < browserInterestArr.size(); i++) {
-		JSONObject obj = browserInterestArr.get(i);
-		if (obj != null) {
-			try {
-				String topLevel = obj.getString("top");
-				String bottomLevel = obj.getString("bottom");
-				String score = obj.getString("score");
-			} catch (Exception e) {
-				//
-			}
-		}
-	}
+        List<String> userInterestCategory = currentData.getUserInterestData();
 ```
 
 <b>GetHistoryData API</b>
@@ -371,6 +391,24 @@ public class CampaignEventReceiver extends BroadcastReceiver {
 
 		System.out.println("CampaignEvent Recevied with ExtUrl : " + extUrl
 				+ " , " + clicked);
+	}
+}
+```
+
+
+<b>Context Event Listener</b>
+Below code is used to capture every context events
+
+```java
+public class ContextEventReceiver extends BroadcastReceiver {
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		String contextChangedType = intent.getStringExtra("EventType");
+		String contextChangedVal = intent.getStringExtra("EventVal");
+
+		System.out.println("ContextEvent Recevied with ExtUrl : "
+				+ contextChangedType + " , " + contextChangedVal);
 	}
 }
 ```
