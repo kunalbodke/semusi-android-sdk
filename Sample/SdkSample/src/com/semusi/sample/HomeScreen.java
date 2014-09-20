@@ -15,7 +15,6 @@ import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
-import org.json.JSONObject;
 
 import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
@@ -36,7 +35,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.Animator.AnimatorListener;
@@ -46,23 +44,12 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -122,19 +109,6 @@ public class HomeScreen extends Activity {
 		appInterestAdapter = new ArrayAdapter<Interests>(this,
 				android.R.layout.simple_list_item_1, appInterestArr);
 		appInterestView = (TextView) findViewById(R.id.appInterestViewLayout);
-		// appInterestView.setAdapter(appInterestAdapter);
-		// appInterestView.setPrefix("App Interests : ");
-		// appInterestView.setFocusable(false);
-		// appInterestView.showMultiLineUI();
-
-		browserInterestArr = new ArrayList<Interests>();
-		browserInterestAdapter = new ArrayAdapter<Interests>(this,
-				android.R.layout.simple_list_item_1, browserInterestArr);
-		browserInterestView = (TextView) findViewById(R.id.browserInterestViewLayout);
-		// browserInterestView.setAdapter(browserInterestAdapter);
-		// browserInterestView.setPrefix("Browser Interests : ");
-		// browserInterestView.setFocusable(false);
-		// browserInterestView.showMultiLineUI();
 
 		ImageView interestArrow = (ImageView) findViewById(R.id.imageView8);
 		interestArrow.setImageResource(R.drawable.arrow_top);
@@ -227,7 +201,7 @@ public class HomeScreen extends Activity {
 		ContextData currentData = sdk.getCurrentContext();
 
 		// Setup App interests
-		List<JSONObject> appListArr = currentData.getAppInterestData();
+		List<String> appListArr = currentData.getUserInterestData();
 		if (appListArr != null && appListArr.size() > 0) {
 			if (isInterestSpinnerRunning == true) {
 				interest_spinner.resetCount();
@@ -237,26 +211,18 @@ public class HomeScreen extends Activity {
 
 			boolean updateUI = false;
 			if (appListArr.size() != appInterestArr.size()) {
-				// Removing all objects from interest UI
-				// List<Object> appObjs = appInterestView.getObjects();
-				// for (Object obj : appObjs) {
-				// appInterestView.removeObject(obj);
-				// }
-				// for (int i = 0; i < appInterestArr.size(); i++) {
-				// appInterestArr.remove(0);
-				// }
 				appInterestView.setText("");
 				updateUI = true;
+			} else {
+				appInterestView.append("User Interests : \n\n");
 			}
 			if (updateUI) {
-				appInterestView.append("App Interests : \n");
+				appInterestView.append("User Interests : \n\n");
 				for (int i = 0; i < appListArr.size(); i++) {
-					JSONObject obj = appListArr.get(i);
+					String obj = appListArr.get(i);
 					if (obj != null) {
 						try {
-							String str = obj.getString("top");
-							// appInterestArr.add(new Interests(str));
-							appInterestView.append(str + " , ");
+							appInterestView.append(obj + " , ");
 						} catch (Exception e) {
 							//
 						}
@@ -268,39 +234,6 @@ public class HomeScreen extends Activity {
 				isInterestSpinnerRunning = true;
 				interest_spinner.setSpinSpeed(10);
 				interest_spinner.spin();
-			}
-		}
-
-		// Setup Browser interests
-		List<JSONObject> browserListArr = currentData.getBrowserInterestData();
-		if (browserListArr != null && browserListArr.size() > 0) {
-			boolean updateUI = false;
-			if (browserListArr.size() != browserInterestArr.size()) {
-				// Removing all objects from interest UI
-				// List<Object> browserObjs = browserInterestView.getObjects();
-				// for (Object obj : browserObjs) {
-				// browserInterestView.removeObject(obj);
-				// }
-				// for (int i = 0; i < browserInterestArr.size(); i++) {
-				// browserInterestArr.remove(0);
-				// }
-				browserInterestView.setText("");
-				updateUI = true;
-			}
-			if (updateUI) {
-				browserInterestView.append("Browser Interests : \n");
-				for (int i = 0; i < browserListArr.size(); i++) {
-					JSONObject obj = browserListArr.get(i);
-					if (obj != null) {
-						try {
-							String str = obj.getString("bottom");
-							// browserInterestArr.add(new Interests(str));
-							browserInterestView.append(str + " , ");
-						} catch (Exception e) {
-							//
-						}
-					}
-				}
 			}
 		}
 
