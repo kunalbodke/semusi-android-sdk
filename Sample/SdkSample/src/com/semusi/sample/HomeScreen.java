@@ -15,7 +15,6 @@ import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
-
 import semusi.activitysdk.Api;
 import semusi.activitysdk.ContextData;
 import semusi.activitysdk.ContextSdk;
@@ -121,14 +120,15 @@ public class HomeScreen extends Activity {
 				.isSemusiSensing(getApplicationContext());
 		if (isApiRunning == false) {
 			SdkConfig config = new SdkConfig();
-			config.setActivityTrackingAllowedState(true);
+			config.setActivityTrackingAllowedState(false);
+			config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyMedium);
+			config.setDemographicsTrackingAllowedState(false);
+			config.setPedometerTrackingStateAllowed(false);
+
 			config.setAnalyticsTrackingAllowedState(true);
-			config.setDemographicsTrackingAllowedState(true);
-			config.setPedometerTrackingStateAllowed(true);
 			config.setPlacesTrackingAllowedState(true);
-			config.setRuleEngineEventStateAllowed(true);
 			config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
-			config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyHigh);
+			config.setRuleEngineEventStateAllowed(true);
 			config.setDebuggingStateAllowed(true);
 			config.setContinuousSensingAllowed(false);
 			Api.startContext(getApplicationContext(), config);
@@ -241,88 +241,88 @@ public class HomeScreen extends Activity {
 		RelativeLayout rootView = (RelativeLayout) findViewById(R.id.root);
 
 		// set gender type
-		GenderTypeString genderTypeData = currentData.getGenderType();
-		ImageView genderImgView = (ImageView) findViewById(R.id.imageView2);
-		if (genderTypeData.equals(GenderTypeString.MALE)) {
-			genderImgView.setBackgroundResource(R.drawable.gender_male_icon);
-			rootView.setBackgroundResource(R.drawable.background_male);
-			if (isGenderSpinnerRunning == true) {
-				gender_spinner.resetCount();
-				gender_spinner.stopSpinning();
-				gender_spinner.setVisibility(View.INVISIBLE);
-			}
-		} else if (genderTypeData.equals(GenderTypeString.FEMALE)) {
-			genderImgView.setBackgroundResource(R.drawable.gender_female_icon);
-			rootView.setBackgroundResource(R.drawable.background_female);
-			if (isGenderSpinnerRunning == true) {
-				gender_spinner.resetCount();
-				gender_spinner.stopSpinning();
-				gender_spinner.setVisibility(View.INVISIBLE);
-			}
-		} else if (genderTypeData.equals(GenderTypeString.NOGENDERVALUE)) {
-			genderImgView.setBackgroundResource(R.drawable.gender_na_icon);
-			rootView.setBackgroundResource(R.drawable.background_male);
-			if (isGenderSpinnerRunning == false) {
-				isGenderSpinnerRunning = true;
-				gender_spinner.setSpinSpeed(10);
-				gender_spinner.spin();
-			}
-		}
+		// GenderTypeString genderTypeData = currentData.getGenderType();
+		// ImageView genderImgView = (ImageView) findViewById(R.id.imageView2);
+		// if (genderTypeData.equals(GenderTypeString.MALE)) {
+		// genderImgView.setBackgroundResource(R.drawable.gender_male_icon);
+		// rootView.setBackgroundResource(R.drawable.background_male);
+		// if (isGenderSpinnerRunning == true) {
+		// gender_spinner.resetCount();
+		// gender_spinner.stopSpinning();
+		// gender_spinner.setVisibility(View.INVISIBLE);
+		// }
+		// } else if (genderTypeData.equals(GenderTypeString.FEMALE)) {
+		// genderImgView.setBackgroundResource(R.drawable.gender_female_icon);
+		// rootView.setBackgroundResource(R.drawable.background_female);
+		// if (isGenderSpinnerRunning == true) {
+		// gender_spinner.resetCount();
+		// gender_spinner.stopSpinning();
+		// gender_spinner.setVisibility(View.INVISIBLE);
+		// }
+		// } else if (genderTypeData.equals(GenderTypeString.NOGENDERVALUE)) {
+		// genderImgView.setBackgroundResource(R.drawable.gender_na_icon);
+		// rootView.setBackgroundResource(R.drawable.background_male);
+		// if (isGenderSpinnerRunning == false) {
+		// isGenderSpinnerRunning = true;
+		// gender_spinner.setSpinSpeed(10);
+		// gender_spinner.spin();
+		// }
+		// }
 
 		// set height type
-		HeightTypeString heightTypeData = currentData.getHeightType();
-		TextView heightTxtView = (TextView) findViewById(R.id.textView7);
-		if (heightTypeData.equals(HeightTypeString.NOHEIGHTVALUE)) {
-			heightTxtView.setText("--");
-		} else if (heightTypeData.equals(HeightTypeString.SHORT)) {
-			heightTxtView.setText("Short");
-		} else if (heightTypeData.equals(HeightTypeString.MEDIUM)) {
-			heightTxtView.setText("Medium");
-		} else if (heightTypeData.equals(HeightTypeString.TALL)) {
-			heightTxtView.setText("Tall");
-		}
+		// HeightTypeString heightTypeData = currentData.getHeightType();
+		// TextView heightTxtView = (TextView) findViewById(R.id.textView7);
+		// if (heightTypeData.equals(HeightTypeString.NOHEIGHTVALUE)) {
+		// heightTxtView.setText("--");
+		// } else if (heightTypeData.equals(HeightTypeString.SHORT)) {
+		// heightTxtView.setText("Short");
+		// } else if (heightTypeData.equals(HeightTypeString.MEDIUM)) {
+		// heightTxtView.setText("Medium");
+		// } else if (heightTypeData.equals(HeightTypeString.TALL)) {
+		// heightTxtView.setText("Tall");
+		// }
 
 		// set weight type
-		WeightTypeString weightTypeData = currentData.getWeightType();
-		TextView weightTxtView = (TextView) findViewById(R.id.TextView02);
-		if (weightTypeData.equals(WeightTypeString.NOWEIGHTVALUE)) {
-			weightTxtView.setText("--");
-		} else if (weightTypeData.equals(WeightTypeString.LIGHT)) {
-			weightTxtView.setText("Light");
-		} else if (weightTypeData.equals(WeightTypeString.MEDIUM)) {
-			weightTxtView.setText("Medium");
-		} else if (weightTypeData.equals(WeightTypeString.HEAVY)) {
-			weightTxtView.setText("Heavy");
-		}
+		// WeightTypeString weightTypeData = currentData.getWeightType();
+		// TextView weightTxtView = (TextView) findViewById(R.id.TextView02);
+		// if (weightTypeData.equals(WeightTypeString.NOWEIGHTVALUE)) {
+		// weightTxtView.setText("--");
+		// } else if (weightTypeData.equals(WeightTypeString.LIGHT)) {
+		// weightTxtView.setText("Light");
+		// } else if (weightTypeData.equals(WeightTypeString.MEDIUM)) {
+		// weightTxtView.setText("Medium");
+		// } else if (weightTypeData.equals(WeightTypeString.HEAVY)) {
+		// weightTxtView.setText("Heavy");
+		// }
 
 		// set activity type
-		ActivityTypeInt activityType = currentData.getActivityType();
-		ImageView activityImgView = (ImageView) findViewById(R.id.imageView5);
-		if (activityType == ActivityTypeInt.RunningActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_running_icon);
-		} else if (activityType == ActivityTypeInt.SittingActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_sitting_icon);
-		} else if (activityType == ActivityTypeInt.SleepingActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_sleeping_icon);
-		} else if (activityType == ActivityTypeInt.StandingActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_standing_icon);
-		} else if (activityType == ActivityTypeInt.VehicleActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_driving_icon);
-		} else if (activityType == ActivityTypeInt.WalkingActivity) {
-			activityImgView
-					.setBackgroundResource(R.drawable.acitivity_walking_icon);
-		} else if (activityType == ActivityTypeInt.UndefinedActvity) {
-			activityImgView.setBackgroundResource(R.drawable.acitivity_na_icon);
-		}
+		// ActivityTypeInt activityType = currentData.getActivityType();
+		// ImageView activityImgView = (ImageView)
+		// findViewById(R.id.imageView5);
+		// if (activityType == ActivityTypeInt.RunningActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_running_icon);
+		// } else if (activityType == ActivityTypeInt.SittingActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_sitting_icon);
+		// } else if (activityType == ActivityTypeInt.SleepingActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_sleeping_icon);
+		// } else if (activityType == ActivityTypeInt.StandingActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_standing_icon);
+		// } else if (activityType == ActivityTypeInt.VehicleActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_driving_icon);
+		// } else if (activityType == ActivityTypeInt.WalkingActivity) {
+		// activityImgView
+		// .setBackgroundResource(R.drawable.acitivity_walking_icon);
+		// } else if (activityType == ActivityTypeInt.UndefinedActvity) {
+		// activityImgView.setBackgroundResource(R.drawable.acitivity_na_icon);
+		// }
 
 		// set location type
 		LocationTypeString locationType = currentData.getLocationType();
-		// System.out.println("aman check : locType : " + locationType);
 		ImageView placeImgView = (ImageView) findViewById(R.id.imageView4);
 		if (locationType == LocationTypeString.HOME) {
 			placeImgView.setBackgroundResource(R.drawable.places_home_icon);
@@ -346,34 +346,42 @@ public class HomeScreen extends Activity {
 			placeImgView.setBackgroundResource(R.drawable.acitivity_na_icon);
 		}
 
+		String locationProvider = currentData.getLocationProvider();
+		ImageView placeType = (ImageView) findViewById(R.id.imageView6);
+		if (locationProvider.equalsIgnoreCase("GPS"))
+			placeType.setImageResource(R.drawable.location);
+		else if (locationProvider.equalsIgnoreCase("WIFI"))
+			placeType.setImageResource(R.drawable.wifi);
+
 		// Access pedometer history values
-		long currentDateEpoch = getCurrentDateEpoch();
-		ContextData[] pedometerData = sdk.getPedometerHistory(currentDateEpoch,
-				currentDateEpoch);
-		int pedometerCount = 0;
-		float pedometerCalories = 0;
-		if (pedometerData[0] != null) {
-			for (int i = 0; i < pedometerData.length; i++) {
-				pedometerCount = pedometerData[i].getPedometerCount();
-				pedometerCalories = pedometerData[i]
-						.getPedometerCountCalories();
-			}
-		}
-		TextView pedometerCalTxt = (TextView) findViewById(R.id.textView1);
-		pedometerCalTxt.setText(precision(2, pedometerCalories) + "");
-		TextView pedometerCountTxt = (TextView) findViewById(R.id.textView3);
-		pedometerCountTxt.setText(pedometerCount + "");
+		// long currentDateEpoch = getCurrentDateEpoch();
+		// ContextData[] pedometerData =
+		// sdk.getPedometerHistory(currentDateEpoch,
+		// currentDateEpoch);
+		// int pedometerCount = 0;
+		// float pedometerCalories = 0;
+		// if (pedometerData[0] != null) {
+		// for (int i = 0; i < pedometerData.length; i++) {
+		// pedometerCount = pedometerData[i].getPedometerCount();
+		// pedometerCalories = pedometerData[i]
+		// .getPedometerCountCalories();
+		// }
+		// }
+		// TextView pedometerCalTxt = (TextView) findViewById(R.id.textView1);
+		// pedometerCalTxt.setText(precision(2, pedometerCalories) + "");
+		// TextView pedometerCountTxt = (TextView) findViewById(R.id.textView3);
+		// pedometerCountTxt.setText(pedometerCount + "");
 
 		// Access activity history values
-		ContextData[] activityHistory = sdk.getActivityHistory(
-				currentDateEpoch, currentDateEpoch,
-				ActivityTypeInt.RunningActivity.getActivityValue(),
-				ActivityTypeInt.SittingActivity.getActivityValue(),
-				ActivityTypeInt.SleepingActivity.getActivityValue(),
-				ActivityTypeInt.StandingActivity.getActivityValue(),
-				ActivityTypeInt.VehicleActivity.getActivityValue(),
-				ActivityTypeInt.WalkingActivity.getActivityValue());
-		showActivityChart(activityHistory);
+		// ContextData[] activityHistory = sdk.getActivityHistory(
+		// currentDateEpoch, currentDateEpoch,
+		// ActivityTypeInt.RunningActivity.getActivityValue(),
+		// ActivityTypeInt.SittingActivity.getActivityValue(),
+		// ActivityTypeInt.SleepingActivity.getActivityValue(),
+		// ActivityTypeInt.StandingActivity.getActivityValue(),
+		// ActivityTypeInt.VehicleActivity.getActivityValue(),
+		// ActivityTypeInt.WalkingActivity.getActivityValue());
+		// showActivityChart(activityHistory);
 
 		// Updating maps layer
 		boolean updateMapUI = false;

@@ -201,6 +201,13 @@
                         android:textColor="@android:color/black" />
                 </RelativeLayout>
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/line_white" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -209,6 +216,22 @@
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Your Locations"
+                        android:textColor="@android:color/black" />
+
+                    <fragment
+                        android:id="@+id/mapView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textView5"
+                        android:layout_marginTop="5dp"
+                        class="com.google.android.gms.maps.MapFragment" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -227,6 +250,92 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_male"
         android:visibility="visible" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="142dp"
+            android:background="@drawable/circle" >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/appicon" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="34dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="bottom"
+                    android:text="kCal"
+                    android:textColor="@android:color/black"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="9dp" >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="34dp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="bottom"
+                    android:text="Steps"
+                    android:textColor="@android:color/black"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/places_office_icon" />
 
         <LinearLayout
             android:id="@+id/interestbtn"
@@ -273,6 +382,70 @@
                 android:src="@drawable/arrow_top" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="25dp"
+            android:onClick="doSlideActivityView" >
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/acitivity_walking_icon"
+                android:onClick="doSlideActivityView" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="doSlideActivityView"
+                android:src="@drawable/arrow_left" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/linearLayout3"
+            android:layout_marginLeft="10dp"
+            android:onClick="doSlideDemographicsView" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/arrow_right" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:background="@drawable/gender_male_icon" />
+        </LinearLayout>
+
+        <com.todddavies.components.progressbar.ProgressWheel
+            xmlns:app="http://schemas.android.com/apk/res/com.semusi.sdksample"
+            android:id="@+id/gender_spinner"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="25dp"
+            android:visibility="visible"
+            app:barColor="#87A60D"
+            app:barLength="25dp"
+            app:barWidth="15dp"
+            app:rimColor="@android:color/transparent"
+            app:rimWidth="15dp" />
+
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="15dp"
@@ -280,60 +453,6 @@
             android:layout_alignTop="@+id/imageView4"
             android:layout_toRightOf="@+id/imageView4"
             android:src="@drawable/location" />
-
-        <fragment
-            android:id="@+id/mapView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="50dp"
-            class="com.google.android.gms.maps.MapFragment" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/interestbtn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="34dp"
-            android:background="@drawable/places_office_icon" />
-
-        <TextView
-            android:id="@+id/TextView03"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="21dp"
-            android:gravity="center"
-            android:text="Your Places"
-            android:textColor="@android:color/white" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView6"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="80dp"
-            android:src="@drawable/line_white" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView6"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="26dp"
-            android:gravity="center"
-            android:text="Current Place"
-            android:textColor="@android:color/white" />
-
     </RelativeLayout>
 
 </RelativeLayout>
