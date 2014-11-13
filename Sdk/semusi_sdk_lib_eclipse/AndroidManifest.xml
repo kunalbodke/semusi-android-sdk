@@ -84,6 +84,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name="semusi.ruleengine.rulemanager.RuleTimerEventHandler" />
+        <receiver android:name="semusi.ruleengine.rulemanager.RuleTickReceiver" />
         <!-- End of sdk services -->
 
 

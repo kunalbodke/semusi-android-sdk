@@ -115,25 +115,6 @@ public class HomeScreen extends Activity {
 		mapView = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.mapView)).getMap();
 
-		// If semusi is not sensing
-		boolean isApiRunning = ContextSdk
-				.isSemusiSensing(getApplicationContext());
-		if (isApiRunning == false) {
-			SdkConfig config = new SdkConfig();
-			config.setActivityTrackingAllowedState(false);
-			config.setActivityAccuracyLevel(ActivityAccuracyLevel.EAccuracyMedium);
-			config.setDemographicsTrackingAllowedState(false);
-			config.setPedometerTrackingStateAllowed(false);
-
-			config.setAnalyticsTrackingAllowedState(true);
-			config.setPlacesTrackingAllowedState(true);
-			config.setPlacesAccuracyLevel(PlacesAccuracyLevel.EAccuracyHigh);
-			config.setRuleEngineEventStateAllowed(true);
-			config.setDebuggingStateAllowed(true);
-			config.setContinuousSensingAllowed(false);
-			Api.startContext(getApplicationContext(), config);
-		}
-
 		gender_spinner = (ProgressWheel) findViewById(R.id.gender_spinner);
 		interest_spinner = (ProgressWheel) findViewById(R.id.interest_spinner);
 
