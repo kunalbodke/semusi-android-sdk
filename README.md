@@ -14,7 +14,7 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 
 <b>Step 1</b><br>
 <ul>
-<li>Add the semusi_sdk_lib project as a library in your application along with the google-play-services_lib, and that's it.</li>
+<li>Add the semusi_sdk_lib_eclipse project as a library in your application along with the google-play-services_lib, and that's it.</li>
 </ul>
 
 
@@ -29,13 +29,14 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 target=android-19
 manifestmerger.enabled=true
 android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib
-android.library.reference.2=../../semusi_sdk_lib
+android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
+
 <ul>
 <li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
 </ul>
 <ul>
-<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib AndroidManifest.xml file.</li>
+<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib_eclipse AndroidManifest.xml file.</li>
 </ul>
 
 ```java
@@ -78,7 +79,8 @@ android.library.reference.2=../../semusi_sdk_lib
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
 // Optional - Use as per desired functionality
     <!-- Mandatory only for Places detection and In-vehicle activity detection functionality -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -105,31 +107,18 @@ android.library.reference.2=../../semusi_sdk_lib
 ```
 
 <ul>
-<li>Setting up 'Application' class – Copy and paste this in your AndroidManifest.xml file.</li>
-</ul>
-```java
-<application android:name="YOUR.PACKAGE.NAME.MyApplication" >
-```        
-
-<ul>
 <li>Setting up services and recievers – Let us setup our services and recievers in the same AndroidManifest.xml</li>
 </ul>
 ```java
 // The base API service, which is responsible for making sure that the core services collecting and analyzing the data keep running
 <service android:name="semusi.activitysdk.Api" />
-```
 
-```java
 // This is the core service, which is based on native sensor data processing and native c++ based machine learning algorithms
 <service android:name="semusi.mlservice.SemusiHAR" />
-```
 
-```java
 // This is the core service which is used to receive campaign events
 <service android:name="semusi.ruleengine.rulemanager.RuleGatherService" />
-```
 
-```java
 // A receiver, for boot completed intent, which is majorly used by our services to know when the phone has been rebooted and finished booting, so we could restart our STICKY services.
 <receiver android:name="semusi.mlservice.OnAlarmReceiver" >
 <intent-filter>
@@ -139,9 +128,8 @@ android.library.reference.2=../../semusi_sdk_lib
 </receiver>
 
 // A receiver for rule execution.
-<receiver
-    android:name="ruleengine.rulemanager.RuleTimerEventHandler"
-    android:enabled="true" />
+<receiver android:name="ruleengine.rulemanager.RuleTimerEventHandler" />
+<receiver android:name="semusi.ruleengine.rulemanager.RuleTickReceiver" />
 ```
 
 ```java
@@ -154,7 +142,7 @@ android.library.reference.2=../../semusi_sdk_lib
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.semusi.sdksample" />
+                <category android:name="YOUR.PACKAGE.NAME" />
             </intent-filter>
         </receiver>
         <receiver android:name="semusi.ruleengine.pushmanager.NotificationEventReceiver" >
@@ -165,9 +153,7 @@ android.library.reference.2=../../semusi_sdk_lib
 
         <service android:name="semusi.ruleengine.pushmanager.GcmIntentService" />
         <!-- PushHandling Entry end -->
-```
 
-```java
 // Services and Reciver to handle Places updates
         <!-- Places setup start -->
         <service android:name="semusi.context.locationfinder.LocationBroadcastService" />
@@ -249,6 +235,13 @@ public class MyApplication extends ContextApplication {
 		super.onCreate();
 	}
 }
+```
+
+<ul>
+<li>Setting up 'Application' class – Copy and paste this in your Application AndroidManifest.xml file.</li>
+</ul>
+```java
+<application android:name="YOUR.PACKAGE.NAME.MyApplication" >
 ```
 
 <ul>
