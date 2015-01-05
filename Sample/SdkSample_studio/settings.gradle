@@ -1,0 +1,1 @@
+include ':app', ':semusi_sdk_lib_studio'

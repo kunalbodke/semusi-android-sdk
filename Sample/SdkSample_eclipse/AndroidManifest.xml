@@ -1,0 +1,73 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.semusi.sdksample"
+    android:versionCode="121"
+    android:versionName="1.0.21" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name="com.semusi.sample.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/appicon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- Landing Activity -->
+        <activity
+            android:name="com.semusi.sample.HomeScreen"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Google Maps key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="YOUR_MAP_KEY" />
+
+        <!-- Play service meta-data -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Required Meta-Data keys for SemusiSDK -->
+        <meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="YOUR_APP_ID" />
+        <meta-data
+            android:name="com.semusi.analytics.appkey"
+            android:value="YOUR_APP_KEY" />
+        <meta-data
+            android:name="com.semusi.analytics.apikey"
+            android:value="YOUR_API_KEY" />
+        <!-- End of required meta-data -->
+
+
+        <!-- Events receivers from semusi sdk -->
+        <receiver android:name="com.semusi.sample.CampaignEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.CampaignEvent" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.semusi.sample.ContextEventReceiver" >
+            <intent-filter>
+                <action android:name="com.semusi.ContextEvent" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Hockey app entry -->
+        <activity android:name="net.hockeyapp.android.UpdateActivity" />
+    </application>
+
+</manifest>
