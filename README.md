@@ -14,7 +14,11 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 
 <b>Step 1</b><br>
 <ul>
+---- For Eclipse Based ----
 <li>Add the semusi_sdk_lib_eclipse project as a library in your application along with the google-play-services_lib, and that's it.</li>
+
+---- For Android-Studio Based ----
+<li>Add the semusi_sdk_lib_studio project as a module in your application along with the google-play-services_lib, and that's it.</li>
 </ul>
 
 
@@ -22,12 +26,13 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 
 <b>Step 2</b>
 <ul>
+---- For Eclipse Based project only ----
 <li>You need to add manifest merger flag into your project's 'project.properties' file.</li>
 </ul>
 ```java
 # Project target.
 target=android-19
-manifestmerger.enabled=true
+<b>manifestmerger.enabled=true<b>
 android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib
 android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
@@ -36,7 +41,7 @@ android.library.reference.2=../../semusi_sdk_lib_eclipse
 <li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
 </ul>
 <ul>
-<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib_eclipse AndroidManifest.xml file.</li>
+<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib_eclipse or semusi_sdk_lib_studio AndroidManifest.xml file. As per your requirements.</li>
 </ul>
 
 ```java
