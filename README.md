@@ -32,7 +32,7 @@ Your application should have a minSdkVersion 9 and the targetSDKVersion may be 1
 ```java
 # Project target.
 target=android-19
-<b>manifestmerger.enabled=true<b>
+manifestmerger.enabled=true
 android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib
 android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
