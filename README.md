@@ -38,6 +38,50 @@ android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
 
 <ul>
+---- For AndroidStudio Based project obly ----
+<li>Your settings.gradle file looks like below</li>
+</ul>
+```
+include ':app', ':semusi_sdk_lib_studio'
+```
+<ul>
+<li>Your build.gradle file looks like below</li>
+</ul>
+```
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.semusi.sdksample"
+        minSdkVersion 11
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.google.android.gms:play-services:6.5.+'
+    compile files('libs/achartengine-1.1.0.jar')
+    compile files('libs/nineoldandroids.jar')
+    compile files('libs/tokenautocomplete.jar')
+    compile project(':semusi_sdk_lib_studio')
+}
+```
+
+<b>Step 2.1</b>
+<ul>
 <li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
 </ul>
 <ul>
