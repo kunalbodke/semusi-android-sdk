@@ -13,20 +13,29 @@ The Semusi service need to use a number of resources in order to be able to trac
 Your application should have a minSdkVersion 9 and the targetSDKVersion may be 19.
 
 <b>Step 1</b><br>
+<b>For Eclipse Based</b>
 <ul>
----- For Eclipse Based ----
 <li>Add the semusi_sdk_lib_eclipse project as a library in your application along with the google-play-services_lib, and that's it.</li>
-
----- For Android-Studio Based ----
+</ul>
+<b>For Android-Studio Based</b>
+<ul>
 <li>Add the semusi_sdk_lib_studio project as a module in your application along with the google-play-services_lib, and that's it.</li>
 </ul>
 
 
 <b>Semusi SDK Directory Structure</b>
 
+<b>For Eclipse Based</b>
+<img src="https://s3.amazonaws.com/semusi-dashboard-images/android_eclipse_foldersetup.png"></img>
+
+<b>For Android-Studio Based</b>
+<img src="https://s3.amazonaws.com/semusi-dashboard-images/android_studio_foldersetup.png"></img>
+
+
 <b>Step 2</b>
+
+<b>For Eclipse Based</b>
 <ul>
----- For Eclipse Based project only ----
 <li>You need to add manifest merger flag into your project's 'project.properties' file.</li>
 </ul>
 ```java
@@ -37,8 +46,8 @@ android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_
 android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
 
+<b>For Android-Studio Based</b>
 <ul>
----- For AndroidStudio Based project obly ----
 <li>Your settings.gradle file looks like below</li>
 </ul>
 ```
