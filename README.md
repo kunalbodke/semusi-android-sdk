@@ -13,14 +13,28 @@ The Semusi service need to use a number of resources in order to be able to trac
 Your application should have a minSdkVersion 9 and the targetSDKVersion may be 19.
 
 <b>Step 1</b><br>
+<b>For Eclipse Based</b>
 <ul>
 <li>Add the semusi_sdk_lib_eclipse project as a library in your application along with the google-play-services_lib, and that's it.</li>
+</ul>
+<b>For Android-Studio Based</b>
+<ul>
+<li>Add the semusi_sdk_lib_studio project as a module in your application along with the google-play-services_lib, and that's it.</li>
 </ul>
 
 
 <b>Semusi SDK Directory Structure</b>
 
+<b>For Eclipse Based</b>
+<img src="https://s3.amazonaws.com/semusi-dashboard-images/android_eclipse_foldersetup.png"></img>
+
+<b>For Android-Studio Based</b>
+<img src="https://s3.amazonaws.com/semusi-dashboard-images/android_studio_foldersetup.png"></img>
+
+
 <b>Step 2</b>
+
+<b>For Eclipse Based</b>
 <ul>
 <li>You need to add manifest merger flag into your project's 'project.properties' file.</li>
 </ul>
@@ -32,11 +46,55 @@ android.library.reference.1=../../../../android-sdk-macosx/extras/google/google_
 android.library.reference.2=../../semusi_sdk_lib_eclipse
 ```
 
+<b>For Android-Studio Based</b>
+<ul>
+<li>Your settings.gradle file looks like below</li>
+</ul>
+```
+include ':app', ':semusi_sdk_lib_studio'
+```
+<ul>
+<li>Your build.gradle file looks like below</li>
+</ul>
+```
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.semusi.sdksample"
+        minSdkVersion 11
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.google.android.gms:play-services:6.5.+'
+    compile files('libs/achartengine-1.1.0.jar')
+    compile files('libs/nineoldandroids.jar')
+    compile files('libs/tokenautocomplete.jar')
+    compile project(':semusi_sdk_lib_studio')
+}
+```
+
+<b>Step 2.1</b>
 <ul>
 <li>You need to replace "YOUR.PACKAGE.NAME" with your application's package name.</li>
 </ul>
 <ul>
-<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib_eclipse AndroidManifest.xml file.</li>
+<li>Setting up user permissions – Modify the following permissions as required from our semusi_sdk_lib_eclipse or semusi_sdk_lib_studio AndroidManifest.xml file. As per your requirements.</li>
 </ul>
 
 ```java
